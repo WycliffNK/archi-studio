@@ -7,72 +7,39 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 const awards = [
-  {
-    year: "2021",
-    title: "Pritzker Architecture Prize",
-    category: "Architecture Excellence",
-    description: "Recognized for a lifetime of significant contributions to humanity through the art of architecture.",
-  },
-  {
-    year: "2018",
-    title: "Aga Khan Award for Architecture",
-    category: "Cultural Significance",
-    description: "Honoring projects that set new standards of excellence in architecture, planning, and preservation.",
-  },
-  {
-    year: "2015",
-    title: "RIBA Royal Gold Medal",
-    category: "International Architecture",
-    description: "The highest honor in British architecture, awarded for a body of work rather than a single project.",
-  },
-  {
-    year: "2005",
-    title: "Architectural Digest AD100",
-    category: "Design Leadership",
-    description: "Named among the world's most influential architects and interior designers shaping the built world.",
-  },
+  { year: "2005", title: "Architecture project of the year", category: "Architecture" },
+  { year: "2010", title: "Best Interior of the day", category: "Interior" },
+  { year: "2018", title: "Best project of the year", category: "Landscape" },
+  { year: "2021", title: "Best project of the month", category: "Architecture" },
 ];
 
 export default function AwardsSection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const headlineRef = useRef<HTMLDivElement>(null);
-  const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
-  const linesRef = useRef<(HTMLSpanElement | null)[]>([]);
+  const leftRef = useRef<HTMLDivElement>(null);
+  const rowsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from(headlineRef.current, {
-        y: 50,
+      gsap.from(leftRef.current, {
         opacity: 0,
+        y: 30,
         duration: 1,
         ease: "power3.out",
         immediateRender: false,
-        scrollTrigger: { trigger: headlineRef.current, start: "top 85%" },
+        scrollTrigger: { trigger: leftRef.current, start: "top 85%" },
       });
 
-      itemsRef.current.forEach((item, i) => {
-        if (!item) return;
-        const line = linesRef.current[i];
-
-        gsap.from(item, {
-          x: -40,
+      rowsRef.current.forEach((row, i) => {
+        if (!row) return;
+        gsap.from(row, {
           opacity: 0,
-          duration: 0.8,
+          y: 30,
+          duration: 0.7,
+          delay: i * 0.12,
           ease: "power3.out",
           immediateRender: false,
-          scrollTrigger: { trigger: item, start: "top 88%" },
+          scrollTrigger: { trigger: row, start: "top 90%" },
         });
-
-        if (line) {
-          gsap.from(line, {
-            scaleX: 0,
-            duration: 0.8,
-            delay: 0.2,
-            ease: "power3.out",
-            immediateRender: false,
-            scrollTrigger: { trigger: item, start: "top 88%" },
-          });
-        }
       });
     }, sectionRef);
 
@@ -83,57 +50,57 @@ export default function AwardsSection() {
     <section
       ref={sectionRef}
       id="awards"
-      className="py-28 md:py-40 bg-[#0a0a0a] overflow-hidden"
+      className="bg-[#1F1F1F] py-20 md:py-28 overflow-hidden"
     >
       <div className="max-w-[1400px] mx-auto px-8 md:px-16">
-        <div ref={headlineRef} className="mb-20">
-          <p className="text-[11px] tracking-[0.4em] uppercase text-white/30 mb-4">
-            Recognition
-          </p>
-          <h2 className="font-cormorant font-light text-5xl md:text-6xl xl:text-7xl leading-none text-white">
-            Awards &amp; <em className="italic">Accolades</em>
-          </h2>
-        </div>
+        <div className="grid lg:grid-cols-12 gap-12 lg:gap-16">
+          {/* Left column */}
+          <div ref={leftRef} className="lg:col-span-4">
+            <span className="text-[#efff02] text-xs font-semibold tracking-[3px] uppercase block mb-4">
+              International awards
+            </span>
+            <h4 className="text-white font-semibold text-xl md:text-2xl leading-snug mb-5">
+              These awards reflect the hard work.
+            </h4>
+            <p className="text-[#737373] text-sm leading-relaxed">
+              Our buildings combine minimalism &amp; elegance of lines and shapes. We want them to be an integral part of the surrounding landscape.
+            </p>
+          </div>
 
-        <div className="flex flex-col">
-          {awards.map((award, i) => (
-            <div
-              key={award.year}
-              ref={(el) => { itemsRef.current[i] = el; }}
-              className="group relative"
-            >
-              <span
-                ref={(el) => { linesRef.current[i] = el; }}
-                className="absolute top-0 left-0 w-full h-px bg-white/10 origin-left"
-              />
-              <div className="grid md:grid-cols-[120px_1fr_1fr] gap-6 md:gap-12 py-10 md:py-12 group-hover:bg-white/[0.03] transition-colors duration-500">
-                <div>
-                  <span className="font-cormorant text-white/30 text-5xl font-light group-hover:text-white/60 transition-colors duration-300">
-                    {award.year}
-                  </span>
-                </div>
-                <div>
-                  <h3 className="text-white font-light text-xl mb-2 group-hover:italic transition-all duration-300">
-                    {award.title}
-                  </h3>
-                  <p className="text-[11px] tracking-[0.25em] uppercase text-white/35">
-                    {award.category}
-                  </p>
-                </div>
-                <div className="flex items-center justify-between">
-                  <p className="text-white/45 text-sm leading-relaxed max-w-sm">
-                    {award.description}
-                  </p>
-                  <span className="hidden md:block text-white/20 text-2xl group-hover:text-white/60 group-hover:translate-x-2 transition-all duration-300">
-                    →
-                  </span>
-                </div>
+          {/* Right column — award rows */}
+          <div className="lg:col-span-7 lg:col-start-6">
+            {awards.map((award, i) => (
+              <div
+                key={award.year}
+                ref={(el) => { rowsRef.current[i] = el; }}
+                className={`flex items-center gap-6 md:gap-8 py-6 relative ${
+                  i < awards.length - 1 ? "border-b border-[#3E3E3E]" : ""
+                }`}
+              >
+                {/* Year */}
+                <span className="text-[#efff02] font-semibold w-12 md:w-16 flex-shrink-0">
+                  {award.year}
+                </span>
+                {/* Title */}
+                <span className="text-white font-medium flex-1 text-sm md:text-base">
+                  {award.title}
+                </span>
+                {/* Category */}
+                <span className="text-[#737373] font-medium text-sm hidden md:block w-24 flex-shrink-0">
+                  {award.category}
+                </span>
+                {/* Arrow */}
+                <a
+                  href="#"
+                  className="text-white/50 hover:text-white transition-colors duration-300 flex-shrink-0"
+                >
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </a>
               </div>
-              {i === awards.length - 1 && (
-                <span className="absolute bottom-0 left-0 w-full h-px bg-white/10" />
-              )}
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </section>

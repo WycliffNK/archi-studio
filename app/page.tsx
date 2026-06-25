@@ -1,12 +1,12 @@
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
-import MarqueeText from "@/components/MarqueeText";
+import VideoSection from "@/components/VideoSection";
 import ServicesSection from "@/components/ServicesSection";
 import ClientLogos from "@/components/ClientLogos";
 import AwardsSection from "@/components/AwardsSection";
 import ProjectsSection from "@/components/ProjectsSection";
-import TestimonialsSection from "@/components/TestimonialsSection";
+import MarqueeText from "@/components/MarqueeText";
 import BlogSection from "@/components/BlogSection";
 import Footer from "@/components/Footer";
 import CustomCursor from "@/components/CustomCursor";
@@ -19,13 +19,12 @@ export default function Home() {
       <main>
         <HeroSection />
         <AboutSection />
-        <MarqueeText text="Architecture · Interior Design · Urban Planning" />
+        <VideoSection />
         <ServicesSection />
         <ClientLogos />
         <AwardsSection />
-        <MarqueeText text="Creating Spaces That Inspire" dark />
         <ProjectsSection />
-        <TestimonialsSection />
+        <MarqueeText />
         <BlogSection />
       </main>
       <Footer />

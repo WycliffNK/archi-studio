@@ -3,12 +3,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 
-interface MarqueeTextProps {
-  text: string;
-  dark?: boolean;
-}
-
-export default function MarqueeText({ text, dark = false }: MarqueeTextProps) {
+export default function MarqueeText() {
   const trackRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -19,7 +14,7 @@ export default function MarqueeText({ text, dark = false }: MarqueeTextProps) {
 
     const tween = gsap.to(track, {
       x: -totalWidth,
-      duration: 30,
+      duration: 35,
       ease: "none",
       repeat: -1,
       modifiers: {
@@ -27,35 +22,26 @@ export default function MarqueeText({ text, dark = false }: MarqueeTextProps) {
       },
     });
 
-    return () => {
-      tween.kill();
-    };
+    return () => { tween.kill(); };
   }, []);
 
-  const items = Array(8).fill(text);
+  const words = "we love  architecture  and  interior design".split("  ");
+  const items = [...Array(6)].flatMap(() => words);
 
   return (
-    <div
-      className={`overflow-hidden py-8 border-y ${
-        dark
-          ? "bg-[#0a0a0a] border-white/10"
-          : "bg-white border-[#0a0a0a]/8"
-      }`}
-    >
-      <div ref={trackRef} className="flex gap-0 whitespace-nowrap">
-        {[...items, ...items].map((item, i) => (
+    <div className="bg-[#191919] overflow-hidden py-10 border-y border-[#3E3E3E]">
+      <div ref={trackRef} className="flex whitespace-nowrap">
+        {items.map((word, i) => (
           <span
             key={i}
-            className={`font-cormorant text-5xl md:text-7xl font-light italic px-12 select-none ${
-              dark ? "text-white/10" : "text-[#0a0a0a]/8"
+            className={`font-antonio font-bold select-none flex-shrink-0 px-8 ${
+              i % 2 === 0
+                ? "text-[#3E3E3E]"
+                : "text-white"
             }`}
+            style={{ fontSize: "clamp(60px, 8vw, 130px)", letterSpacing: "-3px" }}
           >
-            {item}
-            <span
-              className={`inline-block mx-12 w-4 h-4 rounded-full align-middle ${
-                dark ? "bg-white/10" : "bg-[#0a0a0a]/8"
-              }`}
-            />
+            {word}
           </span>
         ))}
       </div>

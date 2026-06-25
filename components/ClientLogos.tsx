@@ -7,61 +7,51 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 const clients = [
-  "BJARKE INGELS",
-  "ZAHA HADID",
-  "FOSTER + PARTNERS",
-  "RENZO PIANO",
-  "NORMAN FOSTER",
-  "TADAO ANDO",
+  { name: "RENZO" },
+  { name: "NORMAN" },
+  { name: "ZAHA" },
+  { name: "FOSTER" },
 ];
 
 export default function ClientLogos() {
-  const trackRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
+  const logosRef = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from(sectionRef.current, {
-        opacity: 0,
-        duration: 1,
-        ease: "power2.out",
-        immediateRender: false,
-        scrollTrigger: { trigger: sectionRef.current, start: "top 90%" },
-      });
-
-      const track = trackRef.current;
-      if (!track) return;
-      const totalWidth = track.scrollWidth / 2;
-
-      gsap.to(track, {
-        x: -totalWidth,
-        duration: 20,
-        ease: "none",
-        repeat: -1,
-        modifiers: {
-          x: gsap.utils.unitize((x) => parseFloat(x) % totalWidth),
-        },
+      logosRef.current.forEach((el, i) => {
+        if (!el) return;
+        gsap.from(el, {
+          opacity: 0,
+          y: i % 2 === 0 ? -20 : 20,
+          duration: 0.8,
+          delay: i * 0.1,
+          ease: "power3.out",
+          immediateRender: false,
+          scrollTrigger: { trigger: sectionRef.current, start: "top 88%" },
+        });
       });
     }, sectionRef);
 
     return () => ctx.revert();
   }, []);
 
-  const allClients = [...clients, ...clients];
-
   return (
     <section
       ref={sectionRef}
-      className="py-16 md:py-20 border-y border-[#0a0a0a]/8 bg-white overflow-hidden"
+      className="bg-[#191919] py-14 md:py-16 border-t border-[#3E3E3E]"
     >
-      <div className="relative overflow-hidden">
-        <div ref={trackRef} className="flex gap-0 whitespace-nowrap">
-          {allClients.map((client, i) => (
-            <div key={`${client}-${i}`} className="inline-flex items-center gap-16 px-14">
-              <span className="font-cormorant text-xl font-light tracking-[0.15em] text-[#0a0a0a]/30 hover:text-[#0a0a0a]/70 transition-colors duration-300 cursor-pointer select-none">
-                {client}
+      <div className="max-w-[1400px] mx-auto px-8 md:px-16">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 items-center justify-items-center">
+          {clients.map((client, i) => (
+            <div
+              key={client.name}
+              ref={(el) => { logosRef.current[i] = el; }}
+              className="opacity-30 hover:opacity-60 transition-opacity duration-300"
+            >
+              <span className="font-antonio text-white text-2xl tracking-[4px] font-bold">
+                {client.name}
               </span>
-              <span className="w-1.5 h-1.5 rounded-full bg-[#0a0a0a]/20 flex-shrink-0" />
             </div>
           ))}
         </div>

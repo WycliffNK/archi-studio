@@ -8,16 +8,21 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 const offices = [
-  { city: "London", address: "14 Finsbury Square, EC2A 1BR", phone: "+44 20 7946 0301" },
-  { city: "Paris", address: "8 Rue du Faubourg, 75008", phone: "+33 1 42 86 21 00" },
-  { city: "Zurich", address: "Bahnhofstrasse 21, 8001", phone: "+41 44 211 22 33" },
+  {
+    name: "Crafto - London",
+    address: "401 Broadway, 24th floor, Orchard view, London, UK",
+  },
+  {
+    name: "Crafto - France",
+    address: "27 Eden walk eden centre, Orchard view, Paris, France",
+  },
+  {
+    name: "Crafto - Switzerland",
+    address: "701 Sondanella, 24th floor, Gunsberg, Switzerland",
+  },
 ];
 
-const links = {
-  Studio: ["About", "Careers", "Press", "Contact"],
-  Services: ["Architecture", "Residential", "Interior", "Exterior"],
-  Projects: ["Residential", "Commercial", "Cultural", "Public"],
-};
+const navLinks = ["Home", "About", "Services", "Projects", "Articles", "Contact"];
 
 export default function Footer() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -31,7 +36,7 @@ export default function Footer() {
         y: 40,
         opacity: 0,
         duration: 0.9,
-        stagger: 0.1,
+        stagger: 0.12,
         ease: "power3.out",
         immediateRender: false,
         scrollTrigger: {
@@ -45,77 +50,79 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer ref={sectionRef} className="bg-[#0a0a0a] text-white pt-24 pb-10 overflow-hidden">
-      <div className="max-w-[1400px] mx-auto px-8 md:px-16">
-        {/* CTA Banner */}
-        <div data-footer-col className="border-b border-white/10 pb-20 mb-20">
-          <h2 className="font-cormorant font-light text-5xl md:text-7xl xl:text-8xl leading-none text-white mb-8 max-w-3xl">
-            Ready to build something <em className="italic">extraordinary?</em>
-          </h2>
-          <button className="group flex items-center gap-4 text-white text-xs tracking-[0.25em] uppercase">
-            <span className="border border-white/40 px-10 py-5 hover:bg-white hover:text-black transition-all duration-300">
-              Start a Project
-            </span>
-          </button>
-        </div>
-
-        {/* Footer Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-5 gap-12 mb-20">
-          <div data-footer-col className="col-span-2 md:col-span-1 xl:col-span-2">
-            <Link href="#" className="text-xl tracking-[0.2em] uppercase text-white font-light block mb-6">
-              ARCHI<span className="font-semibold">STUDIO</span>
-            </Link>
-            <p className="text-white/40 text-sm leading-relaxed max-w-xs mb-8">
-              Award-winning architecture and interior design studio. Creating spaces that inspire, endure, and connect people to place.
-            </p>
-            <div className="flex gap-5">
-              {["Facebook", "Twitter", "Instagram", "LinkedIn"].map((s) => (
-                <Link key={s} href="#" className="text-white/30 text-[10px] tracking-widest uppercase hover:text-white transition-colors">
-                  {s.slice(0, 2)}
-                </Link>
-              ))}
-            </div>
-          </div>
-
-          {Object.entries(links).map(([category, items]) => (
-            <div key={category} data-footer-col>
-              <p className="text-[10px] tracking-[0.35em] uppercase text-white/30 mb-6">{category}</p>
-              <ul className="flex flex-col gap-3">
-                {items.map((item) => (
-                  <li key={item}>
-                    <Link href="#" className="text-white/55 text-sm hover:text-white transition-colors duration-200">
-                      {item}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-
-        {/* Offices */}
-        <div data-footer-col className="grid md:grid-cols-3 gap-10 border-t border-white/10 pt-14 mb-14">
-          {offices.map((office) => (
-            <div key={office.city}>
-              <p className="text-[10px] tracking-[0.35em] uppercase text-white/30 mb-4">{office.city}</p>
-              <p className="text-white/55 text-sm leading-relaxed">{office.address}</p>
-              <p className="text-white/35 text-sm mt-1">{office.phone}</p>
-            </div>
-          ))}
-        </div>
-
-        {/* Bottom Bar */}
-        <div data-footer-col className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-t border-white/10 pt-8">
-          <p className="text-white/25 text-xs tracking-[0.1em]">
-            © {new Date().getFullYear()} ArchiStudio. All rights reserved.
+    <footer
+      ref={sectionRef}
+      className="bg-[#1F1F1F] overflow-hidden"
+      style={{ backgroundImage: "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.03) 1px, transparent 0)", backgroundSize: "30px 30px" }}
+    >
+      {/* Top CTA bar */}
+      <div data-footer-col className="border-b border-[#3E3E3E] py-8 px-8 md:px-16">
+        <div className="max-w-[1400px] mx-auto flex flex-col sm:flex-row items-center gap-6 sm:gap-8">
+          <p className="text-[#737373] text-sm">
+            Let&apos;s build something{" "}
+            <span className="text-white">great together</span>
           </p>
-          <div className="flex gap-6">
-            {["Privacy Policy", "Terms of Service", "Cookie Policy"].map((item) => (
-              <Link key={item} href="#" className="text-white/25 text-xs tracking-[0.1em] hover:text-white/60 transition-colors">
-                {item}
+          <div className="h-px w-16 bg-[#efff02] hidden sm:block flex-shrink-0" />
+          <a
+            href="mailto:hello@crafto.com"
+            className="text-[#efff02] font-medium font-antonio"
+            style={{ fontSize: "clamp(18px, 2vw, 26px)" }}
+          >
+            hello@crafto.com
+          </a>
+          <div className="sm:ml-auto">
+            <Link href="#" className="font-antonio text-white text-xl tracking-[0.1em]">
+              CRAFTO
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      {/* Office addresses */}
+      <div data-footer-col className="py-12 md:py-16 px-8 md:px-16 border-b border-[#3E3E3E]">
+        <div className="max-w-[1400px] mx-auto grid md:grid-cols-4 gap-8">
+          {offices.map((office) => (
+            <div key={office.name} className="text-center sm:text-left">
+              <span className="text-white text-xs font-semibold tracking-[2px] uppercase block mb-3">
+                {office.name}
+              </span>
+              <p className="text-[#737373] text-sm leading-relaxed">
+                {office.address}
+              </p>
+            </div>
+          ))}
+          {/* Contact */}
+          <div className="text-center sm:text-right">
+            <a href="tel:+1235678901" className="text-white text-sm block mb-1 hover:text-[#efff02] transition-colors">
+              + 123 567 8901
+            </a>
+            <a
+              href="mailto:info@domain.com"
+              className="text-white font-medium text-sm hover:text-[#efff02] transition-colors"
+            >
+              info@domain.com
+            </a>
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom nav + copyright */}
+      <div data-footer-col className="py-6 px-8 md:px-16">
+        <div className="max-w-[1400px] mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+          <nav className="flex flex-wrap justify-center md:justify-start gap-x-6 gap-y-2">
+            {navLinks.map((link) => (
+              <Link
+                key={link}
+                href="#"
+                className="text-[#737373] text-sm hover:text-white transition-colors duration-200"
+              >
+                {link}
               </Link>
             ))}
-          </div>
+          </nav>
+          <p className="text-[#737373] text-xs">
+            © {new Date().getFullYear()} Crafto. All rights reserved.
+          </p>
         </div>
       </div>
     </footer>

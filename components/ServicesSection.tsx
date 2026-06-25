@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -10,38 +10,34 @@ gsap.registerPlugin(ScrollTrigger);
 const services = [
   {
     title: "Architecture",
-    description:
-      "Full-spectrum architectural design from concept to completion, blending innovation with structural excellence.",
+    description: "Lorem ipsum consectetur elit do eiusmod tempor incididunt.",
     image: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=800&q=80",
-    number: "01",
   },
   {
-    title: "Residential Space",
-    description:
-      "Bespoke residential designs tailored to your lifestyle, creating homes that reflect your unique vision.",
+    title: "Residential space",
+    description: "Lorem ipsum consectetur elit do eiusmod tempor incididunt.",
     image: "https://images.unsplash.com/photo-1600210492493-0946911123ea?w=800&q=80",
-    number: "02",
   },
   {
-    title: "Interior Design",
-    description:
-      "Thoughtful interior spaces that balance aesthetics, function, and the subtle language of material.",
+    title: "Interior design",
+    description: "Lorem ipsum consectetur elit do eiusmod tempor incididunt.",
     image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800&q=80",
-    number: "03",
   },
   {
-    title: "Exterior Planning",
-    description:
-      "Integrated landscape and exterior design that extends your living space into the natural world.",
+    title: "Exterior planning",
+    description: "Lorem ipsum consectetur elit do eiusmod tempor incididunt.",
     image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800&q=80",
-    number: "04",
   },
 ];
 
 export default function ServicesSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const headlineRef = useRef<HTMLDivElement>(null);
-  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const sliderRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [current, setCurrent] = useState(0);
+  const isDragging = useRef(false);
+  const startX = useRef(0);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -54,78 +50,142 @@ export default function ServicesSection() {
         scrollTrigger: { trigger: headlineRef.current, start: "top 85%" },
       });
 
-      cardsRef.current.forEach((card, i) => {
-        if (!card) return;
-        gsap.from(card, {
-          y: 80,
-          opacity: 0,
-          duration: 0.9,
-          delay: i * 0.1,
-          ease: "power3.out",
-          immediateRender: false,
-          scrollTrigger: { trigger: card, start: "top 88%" },
-        });
+      gsap.from(sliderRef.current, {
+        x: 100,
+        opacity: 0,
+        duration: 1.2,
+        ease: "power3.out",
+        immediateRender: false,
+        scrollTrigger: { trigger: sliderRef.current, start: "top 88%" },
       });
     }, sectionRef);
 
     return () => ctx.revert();
   }, []);
 
+  const cardWidth = 300;
+  const gap = 35;
+
+  const scrollTo = useCallback((index: number) => {
+    if (!trackRef.current) return;
+    const clamped = Math.max(0, Math.min(index, services.length - 1));
+    setCurrent(clamped);
+    gsap.to(trackRef.current, {
+      x: -(clamped * (cardWidth + gap)),
+      duration: 0.6,
+      ease: "power3.out",
+    });
+  }, []);
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    isDragging.current = true;
+    startX.current = e.clientX;
+  };
+
+  const handleMouseUp = (e: React.MouseEvent) => {
+    if (!isDragging.current) return;
+    isDragging.current = false;
+    const diff = startX.current - e.clientX;
+    if (Math.abs(diff) > 40) {
+      scrollTo(diff > 0 ? current + 1 : current - 1);
+    }
+  };
+
   return (
     <section
       ref={sectionRef}
       id="services"
-      className="py-28 md:py-40 bg-[#f7f5f2] overflow-hidden"
+      className="bg-[#191919] py-20 md:py-28 overflow-hidden"
     >
       <div className="max-w-[1400px] mx-auto px-8 md:px-16">
-        <div ref={headlineRef} className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-20">
+        {/* Header */}
+        <div
+          ref={headlineRef}
+          className="grid md:grid-cols-2 gap-8 items-end mb-14"
+        >
           <div>
-            <p className="text-[11px] tracking-[0.4em] uppercase text-[#0a0a0a]/50 mb-4">
-              What We Do
-            </p>
-            <h2 className="font-cormorant font-light text-5xl md:text-6xl xl:text-7xl leading-none text-[#0a0a0a]">
-              We create <em className="italic">modernity</em>
-            </h2>
+            <span className="text-[#efff02] text-xs font-semibold tracking-[3px] uppercase block mb-3">
+              Architecture services
+            </span>
+            <h4 className="text-white font-semibold text-2xl md:text-3xl leading-snug mb-0">
+              Create functional and stylish modern buildings for you.
+            </h4>
           </div>
-          <p className="text-[#0a0a0a]/55 max-w-xs text-sm leading-relaxed">
-            Four core disciplines that together form a complete vision for the built environment.
-          </p>
+          <div>
+            <p className="text-[#737373] leading-relaxed">
+              Our buildings combine minimalism and elegance of lines and shapes. We want them to be an integral part of the surrounding landscape.
+            </p>
+          </div>
         </div>
 
-        <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-px bg-[#0a0a0a]/8">
-          {services.map((service, i) => (
-            <div
-              key={service.title}
-              ref={(el) => { cardsRef.current[i] = el; }}
-              className="group relative bg-[#f7f5f2] overflow-hidden cursor-pointer"
-            >
-              <div className="relative h-72 overflow-hidden">
-                <Image
-                  src={service.image}
-                  alt={service.title}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
-                  unoptimized
-                />
-                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-500" />
-                <span className="absolute top-5 right-5 font-cormorant text-white/40 text-4xl font-light">
-                  {service.number}
-                </span>
-              </div>
-
-              <div className="p-8">
-                <h3 className="font-cormorant text-2xl font-light text-[#0a0a0a] mb-3 group-hover:italic transition-all duration-300">
-                  {service.title}
-                </h3>
-                <p className="text-[#0a0a0a]/55 text-sm leading-relaxed mb-6">
-                  {service.description}
-                </p>
-                <div className="flex items-center gap-3 text-[11px] tracking-[0.25em] uppercase text-[#0a0a0a]/60 group-hover:text-[#0a0a0a] transition-colors duration-300">
-                  <span>Learn More</span>
-                  <span className="w-6 h-px bg-current transition-all duration-300 group-hover:w-10" />
+        {/* Slider */}
+        <div
+          ref={sliderRef}
+          className="overflow-hidden"
+          onMouseDown={handleMouseDown}
+          onMouseUp={handleMouseUp}
+          onMouseLeave={() => { isDragging.current = false; }}
+          style={{ cursor: "grab" }}
+        >
+          <div
+            ref={trackRef}
+            className="flex"
+            style={{ gap: `${gap}px` }}
+          >
+            {services.map((service) => (
+              <div
+                key={service.title}
+                className="flex-shrink-0 group"
+                style={{ width: `${cardWidth}px` }}
+              >
+                {/* Image */}
+                <div className="relative overflow-hidden" style={{ height: "380px" }}>
+                  <Image
+                    src={service.image}
+                    alt={service.title}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    unoptimized
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/60" />
+                  {/* Icon */}
+                  <div className="absolute top-8 left-8 text-white/70 group-hover:text-[#efff02] transition-colors duration-300">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.5">
+                      <rect x="2" y="2" width="28" height="28" rx="1"/>
+                      <path d="M2 12h28M12 2v28"/>
+                    </svg>
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                </div>
+                {/* Content */}
+                <div className="bg-[#191919] py-6 px-0">
+                  <a
+                    href="#"
+                    className="font-antonio text-white text-xl font-medium block mb-3 hover:text-[#efff02] transition-colors duration-300"
+                    style={{ fontSize: "22px" }}
+                  >
+                    {service.title}
+                  </a>
+                  <p className="text-[#737373] text-sm leading-relaxed">
+                    {service.description}
+                  </p>
                 </div>
               </div>
-            </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Dot navigation */}
+        <div className="flex gap-2 mt-6">
+          {services.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => scrollTo(i)}
+              aria-label={`Go to service ${i + 1}`}
+              className={`transition-all duration-300 h-[2px] ${
+                i === current ? "w-8 bg-[#efff02]" : "w-4 bg-[#3E3E3E]"
+              }`}
+            />
           ))}
         </div>
       </div>

@@ -7,30 +7,18 @@ import gsap from "gsap";
 const slides = [
   {
     id: "01",
-    title: "Malena House",
-    subtitle: "Residential Design",
-    description:
-      "A stunning modern residence that redefines the boundaries of contemporary living.",
-    image:
-      "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=1920&q=80",
+    title: "Malena house",
+    image: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=1920&q=80",
   },
   {
     id: "02",
-    title: "Rustic Interior",
-    subtitle: "Interior Design",
-    description:
-      "Blending natural materials with modern aesthetics for timeless interior spaces.",
-    image:
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1920&q=80",
+    title: "Rustic interior",
+    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1920&q=80",
   },
   {
     id: "03",
-    title: "Monzo Office",
-    subtitle: "Commercial Space",
-    description:
-      "Innovative workspace design that fosters creativity and collaboration.",
-    image:
-      "https://images.unsplash.com/photo-1497366216548-37526070297c?w=1920&q=80",
+    title: "Monzo office",
+    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=1920&q=80",
   },
 ];
 
@@ -81,31 +69,17 @@ export default function HeroSection() {
       );
   }, []);
 
-  const resetTimer = useCallback(
-    (next?: number) => {
-      if (timerRef.current) clearInterval(timerRef.current);
-      timerRef.current = setInterval(() => {
-        goTo((currentRef.current + 1) % slides.length);
-      }, 6000);
-      if (next !== undefined) goTo(next);
-    },
-    [goTo]
-  );
-
-  // Initial entrance animation
   useEffect(() => {
     const firstSlide = slidesElRef.current[0];
     if (!firstSlide) return;
 
     gsap.set(firstSlide, { zIndex: 1, opacity: 1 });
-
     gsap.fromTo(
       firstSlide.querySelectorAll("[data-slide-text]"),
       { y: 80, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1.1, stagger: 0.14, ease: "power3.out", delay: 0.8 }
+      { y: 0, opacity: 1, duration: 1.2, stagger: 0.14, ease: "power3.out", delay: 0.9 }
     );
 
-    // Start auto-advance
     timerRef.current = setInterval(() => {
       goTo((currentRef.current + 1) % slides.length);
     }, 6000);
@@ -115,97 +89,127 @@ export default function HeroSection() {
     };
   }, [goTo]);
 
+  const goToSlide = (i: number) => {
+    if (timerRef.current) clearInterval(timerRef.current);
+    goTo(i);
+    timerRef.current = setInterval(() => {
+      goTo((currentRef.current + 1) % slides.length);
+    }, 6000);
+  };
+
+  const nextSlide = () => goToSlide((currentRef.current + 1) % slides.length);
+
   return (
-    <section className="relative w-full h-screen overflow-hidden bg-black">
+    <section className="relative w-full h-screen overflow-hidden bg-[#191919]">
       {slides.map((slide, index) => (
         <div
           key={slide.id}
-          ref={(el) => {
-            slidesElRef.current[index] = el;
-          }}
+          ref={(el) => { slidesElRef.current[index] = el; }}
           className="absolute inset-0"
           style={{ zIndex: 0, opacity: 0 }}
         >
-          {/* Background */}
+          {/* Background image */}
           <Image
             src={slide.image}
             alt={slide.title}
             fill
-            className="object-cover scale-105"
+            className="object-cover"
             priority={index === 0}
             unoptimized
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/40 to-black/10" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
+          {/* Gradient overlays */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/20" />
 
-          {/* Text Content */}
-          <div className="absolute bottom-28 left-8 md:left-20 max-w-2xl">
-            <p
-              data-slide-text
-              className="text-white/60 text-xs tracking-[0.4em] uppercase mb-5"
-            >
-              {slide.subtitle}
-            </p>
+          {/* Slide number — outline, left side */}
+          <div
+            data-slide-text
+            className="absolute left-8 md:left-16 top-1/2 -translate-y-1/2 font-antonio font-bold leading-none select-none pointer-events-none hidden md:block"
+            style={{
+              fontSize: "clamp(120px, 14vw, 200px)",
+              WebkitTextStroke: "2px #efff02",
+              color: "transparent",
+              letterSpacing: "-3px",
+            }}
+          >
+            {slide.id}
+          </div>
+
+          {/* Title + button — bottom left */}
+          <div className="absolute bottom-24 md:bottom-32 left-8 md:left-32 xl:left-44 max-w-2xl">
             <h1
               data-slide-text
-              className="text-white font-cormorant font-light text-6xl md:text-8xl xl:text-[7rem] leading-none mb-6"
+              className="font-antonio text-white font-medium leading-none mb-8"
+              style={{
+                fontSize: "clamp(80px, 11vw, 170px)",
+                letterSpacing: "-6px",
+              }}
             >
               {slide.title}
             </h1>
-            <p
-              data-slide-text
-              className="text-white/65 text-base md:text-lg leading-relaxed max-w-md mb-8"
-            >
-              {slide.description}
-            </p>
             <div data-slide-text>
-              <button className="group inline-flex items-center gap-4 text-white text-xs tracking-[0.25em] uppercase border border-white/50 px-8 py-4 hover:bg-white hover:text-black transition-all duration-400">
-                Explore Project
-                <span className="w-4 h-px bg-current transition-all duration-300 group-hover:w-8" />
-              </button>
+              <a
+                href="#"
+                className="inline-flex items-center gap-4 text-white text-sm tracking-[0.15em] uppercase font-medium hover:opacity-70 transition-opacity duration-300"
+              >
+                <span className="w-12 h-12 border border-white/50 rounded-full flex items-center justify-center flex-shrink-0 hover:border-white transition-colors">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </span>
+                <span>Explore project</span>
+              </a>
             </div>
           </div>
         </div>
       ))}
 
-      {/* Slide Counter */}
-      <div className="absolute right-8 md:right-20 bottom-28 z-20 flex items-baseline gap-2">
-        <span className="text-white font-cormorant text-5xl font-light">
-          {slides[displayCurrent].id}
-        </span>
-        <span className="text-white/40 text-sm">
-          / {String(slides.length).padStart(2, "0")}
-        </span>
+      {/* Right side nav — white arrow button + yellow slide number */}
+      <div className="absolute right-0 md:right-8 bottom-1/2 translate-y-1/2 z-20 hidden md:flex flex-col">
+        <button
+          onClick={nextSlide}
+          className="w-20 h-20 bg-white flex items-center justify-center hover:bg-[#efff02] transition-colors duration-300 group"
+          aria-label="Next slide"
+        >
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-[#191919]">
+            <path d="M4 10h12M12 5l5 5-5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </button>
+        <div
+          className="w-20 h-20 bg-[#efff02] flex items-center justify-center font-antonio text-[#191919] font-bold select-none"
+          style={{ fontSize: "32px", letterSpacing: "-2px" }}
+        >
+          {slides[(displayCurrent + 1) % slides.length].id}
+        </div>
       </div>
 
-      {/* Dot Navigation */}
-      <div className="absolute right-8 md:right-20 top-1/2 -translate-y-1/2 z-20 flex flex-col gap-3">
+      {/* Dot navigation */}
+      <div className="absolute right-6 top-1/2 -translate-y-1/2 z-20 flex flex-col gap-2 md:hidden">
         {slides.map((_, i) => (
           <button
             key={i}
-            onClick={() => resetTimer(i)}
+            onClick={() => goToSlide(i)}
             aria-label={`Go to slide ${i + 1}`}
-            className={`w-px rounded-full transition-all duration-500 ${
-              i === displayCurrent
-                ? "h-14 bg-white"
-                : "h-7 bg-white/30 hover:bg-white/60"
+            className={`rounded-full transition-all duration-500 ${
+              i === displayCurrent ? "w-1 h-10 bg-[#efff02]" : "w-1 h-5 bg-white/30"
             }`}
           />
         ))}
       </div>
 
-      {/* Tagline bottom */}
-      <div className="absolute bottom-8 left-8 md:left-20 z-20">
+      {/* Bottom tagline */}
+      <div className="absolute bottom-6 left-8 md:left-16 z-20">
         <p className="text-white/35 text-[11px] tracking-[0.3em] uppercase">
           Let&apos;s build something great together
         </p>
       </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2">
-        <div className="w-px h-12 bg-white/20 relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-1/2 bg-white/60 animate-[slideDown_2s_ease-in-out_infinite]" />
-        </div>
+      {/* Slide counter — bottom right */}
+      <div className="absolute bottom-6 right-24 z-20 hidden md:flex items-baseline gap-1">
+        <span className="font-antonio text-3xl text-white/80 font-light">
+          {slides[displayCurrent].id}
+        </span>
+        <span className="text-white/30 text-sm">/ 03</span>
       </div>
     </section>
   );

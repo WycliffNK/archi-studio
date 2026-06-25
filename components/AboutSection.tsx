@@ -7,78 +7,69 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const stats = [
-  { value: 16, label: "Years Established", suffix: "" },
-  { value: 350, label: "Satisfied Clients", suffix: "+" },
-  { value: 200, label: "Awards Won", suffix: "+" },
-  { value: 500, label: "Buildings Built", suffix: "+" },
+const features = [
+  {
+    number: "01",
+    text: (
+      <>
+        <span className="text-white font-semibold">350+</span> very satisfied clients around the worldwide.
+      </>
+    ),
+  },
+  {
+    number: "02",
+    text: (
+      <>
+        <span className="text-white font-semibold">200+</span> good award winning architecture agency.
+      </>
+    ),
+  },
+  {
+    number: "03",
+    text: (
+      <>
+        <span className="text-white font-semibold">500+</span> building has been constructed with us.
+      </>
+    ),
+  },
 ];
 
 export default function AboutSection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const headlineRef = useRef<HTMLDivElement>(null);
-  const statsRef = useRef<(HTMLDivElement | null)[]>([]);
-  const imageRef = useRef<HTMLDivElement>(null);
-  const lineRef = useRef<HTMLSpanElement>(null);
+  const leftRef = useRef<HTMLDivElement>(null);
+  const rightRef = useRef<HTMLDivElement>(null);
+  const featuresRef = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from(headlineRef.current, {
-        y: 60,
+      gsap.from(leftRef.current, {
         opacity: 0,
+        y: 40,
         duration: 1,
         ease: "power3.out",
         immediateRender: false,
-        scrollTrigger: { trigger: headlineRef.current, start: "top 85%" },
+        scrollTrigger: { trigger: leftRef.current, start: "top 85%" },
       });
 
-      gsap.from(lineRef.current, {
-        scaleX: 0,
-        duration: 1.2,
+      gsap.from(rightRef.current, {
+        opacity: 0,
+        x: 40,
+        duration: 1,
         ease: "power3.out",
         immediateRender: false,
-        scrollTrigger: { trigger: lineRef.current, start: "top 85%" },
+        scrollTrigger: { trigger: rightRef.current, start: "top 85%" },
       });
 
-      gsap.from(imageRef.current, {
-        clipPath: "inset(100% 0 0 0)",
-        duration: 1.2,
-        ease: "power3.out",
-        immediateRender: false,
-        scrollTrigger: { trigger: imageRef.current, start: "top 80%" },
-      });
-
-      statsRef.current.forEach((el, i) => {
+      featuresRef.current.forEach((el, i) => {
         if (!el) return;
-        const target = stats[i].value;
-        const numEl = el.querySelector("[data-count]");
-        if (!numEl) return;
-
         gsap.from(el, {
-          y: 40,
           opacity: 0,
+          y: 30,
           duration: 0.8,
-          delay: i * 0.1,
+          delay: i * 0.15,
           ease: "power3.out",
           immediateRender: false,
-          scrollTrigger: { trigger: el, start: "top 85%" },
-        });
-
-        ScrollTrigger.create({
-          trigger: el,
-          start: "top 85%",
-          onEnter: () => {
-            const counter = { val: 0 };
-            gsap.to(counter, {
-              val: target,
-              duration: 2,
-              ease: "power2.out",
-              onUpdate() {
-                numEl.textContent = Math.round(counter.val).toString();
-              },
-            });
-          },
-          once: true,
+          scrollTrigger: { trigger: el, start: "top 88%" },
         });
       });
     }, sectionRef);
@@ -90,73 +81,70 @@ export default function AboutSection() {
     <section
       ref={sectionRef}
       id="about"
-      className="py-28 md:py-40 bg-white overflow-hidden"
+      className="bg-[#191919] py-20 md:py-28 overflow-hidden"
     >
       <div className="max-w-[1400px] mx-auto px-8 md:px-16">
-        <div className="grid md:grid-cols-2 gap-16 md:gap-24 items-start">
-          {/* Left Column */}
-          <div>
-            <div className="mb-10 overflow-hidden">
-              <p className="text-[11px] tracking-[0.4em] uppercase text-[#0a0a0a]/50 mb-6">
-                About the Studio
-              </p>
-              <span
-                ref={lineRef}
-                className="block h-px w-16 bg-[#0a0a0a] mb-8 origin-left"
-              />
-            </div>
-
-            <div ref={headlineRef} className="mb-12">
-              <h2 className="font-cormorant font-light text-5xl md:text-6xl xl:text-7xl leading-[1.1] text-[#0a0a0a]">
-                We create spaces that{" "}
-                <em className="italic">inspire</em> and endure
-              </h2>
-            </div>
-
-            <p className="text-[#0a0a0a]/60 leading-relaxed text-base md:text-lg max-w-lg mb-10">
-              For over sixteen years, ArchiStudio has been crafting remarkable
-              architectural experiences that stand the test of time. Our
-              philosophy merges form with function, creating environments that
-              resonate deeply with those who inhabit them.
-            </p>
-
-            <button className="group flex items-center gap-4 text-[#0a0a0a] text-xs tracking-[0.25em] uppercase">
-              <span className="border border-[#0a0a0a] px-8 py-4 hover:bg-[#0a0a0a] hover:text-white transition-all duration-300">
-                Discover More
-              </span>
-            </button>
-          </div>
-
-          {/* Right Column */}
-          <div className="flex flex-col gap-12">
-            <div ref={imageRef} className="relative h-72 md:h-96 overflow-hidden">
+        {/* Top row */}
+        <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-center mb-16 md:mb-20">
+          {/* Left: signature + heading */}
+          <div ref={leftRef}>
+            <div className="relative h-14 w-36 mb-8 opacity-60">
               <Image
-                src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=900&q=80"
-                alt="Architecture studio"
+                src="https://images.unsplash.com/photo-1600210492493-0946911123ea?w=200&q=80"
+                alt="Signature"
                 fill
-                className="object-cover"
+                className="object-contain grayscale"
                 unoptimized
               />
             </div>
+            <h4 className="text-white font-semibold text-2xl md:text-3xl leading-snug">
+              Delivering awesome quality, effective and inspiring built gorgeous space.
+            </h4>
+          </div>
 
-            <div className="grid grid-cols-2 gap-8">
-              {stats.map((stat, i) => (
-                <div
-                  key={stat.label}
-                  ref={(el) => { statsRef.current[i] = el; }}
-                  className="border-t border-[#0a0a0a]/10 pt-6"
+          {/* Right: 16 circle + established text */}
+          <div ref={rightRef} className="flex items-center gap-8 md:gap-10">
+            {/* "16" circle element */}
+            <div className="relative flex-shrink-0">
+              <div className="w-[130px] h-[130px] md:w-[160px] md:h-[160px] rounded-full bg-[#efff02] relative">
+                <span
+                  className="font-antonio font-bold text-[#191919] absolute left-1/2 -translate-x-1/2 leading-none"
+                  style={{ fontSize: "clamp(80px, 10vw, 130px)", top: "-20px", letterSpacing: "-3px" }}
                 >
-                  <p className="font-cormorant font-light text-5xl md:text-6xl text-[#0a0a0a] leading-none mb-2">
-                    <span data-count>0</span>
-                    <span>{stat.suffix}</span>
-                  </p>
-                  <p className="text-[11px] tracking-[0.2em] uppercase text-[#0a0a0a]/50">
-                    {stat.label}
-                  </p>
-                </div>
-              ))}
+                  16
+                </span>
+              </div>
+            </div>
+            <div>
+              <span className="text-white text-sm font-semibold tracking-[1px] uppercase block mb-3">
+                Established for 16 years.
+              </span>
+              <p className="text-[#737373] text-sm leading-relaxed max-w-xs">
+                We are dedicated to providing outstanding architectural and design services that meet the functional and aesthetic.
+              </p>
             </div>
           </div>
+        </div>
+
+        {/* Features row */}
+        <div className="grid md:grid-cols-3 gap-8 md:gap-10">
+          {features.map((f, i) => (
+            <div
+              key={f.number}
+              ref={(el) => { featuresRef.current[i] = el; }}
+              className="relative"
+            >
+              <div className="h-px bg-[#3E3E3E] w-full mb-6 hidden md:block" />
+              <div className="flex items-start justify-between gap-4">
+                <p className="text-[#737373] text-lg leading-relaxed flex-1">
+                  {f.text}
+                </p>
+                <span className="text-[#efff02] font-medium text-lg flex-shrink-0 mt-0.5">
+                  {f.number}
+                </span>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>

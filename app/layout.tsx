@@ -1,17 +1,17 @@
 import type { Metadata } from "next";
-import { DM_Sans, Cormorant_Garamond } from "next/font/google";
+import { Antonio, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 
-const dmSans = DM_Sans({
-  variable: "--font-dm-sans",
+const antonio = Antonio({
+  variable: "--font-antonio",
   subsets: ["latin"],
-  weight: ["300", "400", "500"],
+  weight: ["100", "200", "300", "400", "500", "600", "700"],
 });
 
-const cormorant = Cormorant_Garamond({
-  variable: "--font-cormorant",
+const plusJakarta = Plus_Jakarta_Sans({
+  variable: "--font-plus-jakarta",
   subsets: ["latin"],
-  weight: ["300", "400", "600"],
+  weight: ["200", "300", "400", "500", "600", "700", "800"],
   style: ["normal", "italic"],
 });
 
@@ -26,11 +26,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${dmSans.variable} ${cormorant.variable} h-full`}
-    >
-      <body className="min-h-full flex flex-col bg-white text-[#0a0a0a]">
+    <html lang="en" className={`${antonio.variable} ${plusJakarta.variable} h-full`}>
+      <body className="min-h-full flex flex-col bg-[#191919] text-white">
         {children}
       </body>
     </html>
