@@ -23,74 +23,46 @@ export default function AboutSection() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Headline reveal
-      gsap.fromTo(
-        headlineRef.current,
-        { y: 60, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 1,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: headlineRef.current,
-            start: "top 85%",
-          },
-        }
-      );
+      gsap.from(headlineRef.current, {
+        y: 60,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.out",
+        immediateRender: false,
+        scrollTrigger: { trigger: headlineRef.current, start: "top 85%" },
+      });
 
-      // Line draw
-      gsap.fromTo(
-        lineRef.current,
-        { scaleX: 0 },
-        {
-          scaleX: 1,
-          duration: 1.2,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: lineRef.current,
-            start: "top 85%",
-          },
-        }
-      );
+      gsap.from(lineRef.current, {
+        scaleX: 0,
+        duration: 1.2,
+        ease: "power3.out",
+        immediateRender: false,
+        scrollTrigger: { trigger: lineRef.current, start: "top 85%" },
+      });
 
-      // Image reveal
-      gsap.fromTo(
-        imageRef.current,
-        { clipPath: "inset(100% 0 0 0)" },
-        {
-          clipPath: "inset(0% 0 0 0)",
-          duration: 1.2,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: imageRef.current,
-            start: "top 80%",
-          },
-        }
-      );
+      gsap.from(imageRef.current, {
+        clipPath: "inset(100% 0 0 0)",
+        duration: 1.2,
+        ease: "power3.out",
+        immediateRender: false,
+        scrollTrigger: { trigger: imageRef.current, start: "top 80%" },
+      });
 
-      // Stats counter
       statsRef.current.forEach((el, i) => {
         if (!el) return;
         const target = stats[i].value;
         const numEl = el.querySelector("[data-count]");
         if (!numEl) return;
 
-        gsap.fromTo(
-          el,
-          { y: 40, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.8,
-            delay: i * 0.1,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: el,
-              start: "top 85%",
-            },
-          }
-        );
+        gsap.from(el, {
+          y: 40,
+          opacity: 0,
+          duration: 0.8,
+          delay: i * 0.1,
+          ease: "power3.out",
+          immediateRender: false,
+          scrollTrigger: { trigger: el, start: "top 85%" },
+        });
 
         ScrollTrigger.create({
           trigger: el,
@@ -157,7 +129,6 @@ export default function AboutSection() {
 
           {/* Right Column */}
           <div className="flex flex-col gap-12">
-            {/* Image */}
             <div ref={imageRef} className="relative h-72 md:h-96 overflow-hidden">
               <Image
                 src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=900&q=80"
@@ -168,14 +139,11 @@ export default function AboutSection() {
               />
             </div>
 
-            {/* Stats */}
             <div className="grid grid-cols-2 gap-8">
               {stats.map((stat, i) => (
                 <div
                   key={stat.label}
-                  ref={(el) => {
-                    statsRef.current[i] = el;
-                  }}
+                  ref={(el) => { statsRef.current[i] = el; }}
                   className="border-t border-[#0a0a0a]/10 pt-6"
                 >
                   <p className="font-cormorant font-light text-5xl md:text-6xl text-[#0a0a0a] leading-none mb-2">

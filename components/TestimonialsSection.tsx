@@ -37,38 +37,26 @@ export default function TestimonialsSection() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.fromTo(
-        headlineRef.current,
-        { y: 40, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 1,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: headlineRef.current,
-            start: "top 85%",
-          },
-        }
-      );
+      gsap.from(headlineRef.current, {
+        y: 40,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.out",
+        immediateRender: false,
+        scrollTrigger: { trigger: headlineRef.current, start: "top 85%" },
+      });
 
       cardsRef.current.forEach((card, i) => {
         if (!card) return;
-        gsap.fromTo(
-          card,
-          { y: 60, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.9,
-            delay: i * 0.15,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: card,
-              start: "top 88%",
-            },
-          }
-        );
+        gsap.from(card, {
+          y: 60,
+          opacity: 0,
+          duration: 0.9,
+          delay: i * 0.15,
+          ease: "power3.out",
+          immediateRender: false,
+          scrollTrigger: { trigger: card, start: "top 88%" },
+        });
       });
     }, sectionRef);
 
@@ -76,10 +64,7 @@ export default function TestimonialsSection() {
   }, []);
 
   return (
-    <section
-      ref={sectionRef}
-      className="py-28 md:py-40 bg-[#f7f5f2] overflow-hidden"
-    >
+    <section ref={sectionRef} className="py-28 md:py-40 bg-[#f7f5f2] overflow-hidden">
       <div className="max-w-[1400px] mx-auto px-8 md:px-16">
         <div ref={headlineRef} className="mb-20">
           <p className="text-[11px] tracking-[0.4em] uppercase text-[#0a0a0a]/50 mb-4">
@@ -94,12 +79,9 @@ export default function TestimonialsSection() {
           {testimonials.map((t, i) => (
             <div
               key={t.name}
-              ref={(el) => {
-                cardsRef.current[i] = el;
-              }}
+              ref={(el) => { cardsRef.current[i] = el; }}
               className="bg-[#f7f5f2] p-10 md:p-12 flex flex-col justify-between gap-10"
             >
-              {/* Quote mark */}
               <div>
                 <span className="font-cormorant text-7xl text-[#0a0a0a]/15 leading-none block mb-6">
                   &ldquo;
@@ -109,18 +91,13 @@ export default function TestimonialsSection() {
                 </p>
               </div>
 
-              {/* Author */}
               <div className="flex items-center gap-5 pt-8 border-t border-[#0a0a0a]/10">
                 <div className="w-12 h-12 rounded-full bg-[#0a0a0a] flex items-center justify-center flex-shrink-0">
-                  <span className="text-white text-xs tracking-widest font-light">
-                    {t.initial}
-                  </span>
+                  <span className="text-white text-xs tracking-widest font-light">{t.initial}</span>
                 </div>
                 <div>
                   <p className="text-[#0a0a0a] font-medium text-sm">{t.name}</p>
-                  <p className="text-[#0a0a0a]/45 text-xs tracking-[0.1em]">
-                    {t.role}
-                  </p>
+                  <p className="text-[#0a0a0a]/45 text-xs tracking-[0.1em]">{t.role}</p>
                 </div>
               </div>
             </div>

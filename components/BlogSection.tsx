@@ -13,8 +13,7 @@ const articles = [
     title: "The New Language of Sustainable Architecture",
     excerpt:
       "How contemporary architects are reimagining what it means to build responsibly — without sacrificing beauty.",
-    image:
-      "https://images.unsplash.com/photo-1600585152220-90363fe7e115?w=800&q=80",
+    image: "https://images.unsplash.com/photo-1600585152220-90363fe7e115?w=800&q=80",
     date: "June 12, 2025",
     readTime: "6 min read",
   },
@@ -23,8 +22,7 @@ const articles = [
     title: "Material Honesty: The Case for Raw Surfaces",
     excerpt:
       "Exposed concrete, raw steel, unfinished timber — why the most refined interiors often embrace imperfection.",
-    image:
-      "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80",
+    image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80",
     date: "May 28, 2025",
     readTime: "4 min read",
   },
@@ -33,8 +31,7 @@ const articles = [
     title: "Designing Cities for the Climate Emergency",
     excerpt:
       "From flood-resilient public spaces to biophilic urbanism — the strategies shaping tomorrow's cities.",
-    image:
-      "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=800&q=80",
+    image: "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=800&q=80",
     date: "May 14, 2025",
     readTime: "8 min read",
   },
@@ -47,38 +44,26 @@ export default function BlogSection() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.fromTo(
-        headlineRef.current,
-        { y: 50, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 1,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: headlineRef.current,
-            start: "top 85%",
-          },
-        }
-      );
+      gsap.from(headlineRef.current, {
+        y: 50,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.out",
+        immediateRender: false,
+        scrollTrigger: { trigger: headlineRef.current, start: "top 85%" },
+      });
 
       cardsRef.current.forEach((card, i) => {
         if (!card) return;
-        gsap.fromTo(
-          card,
-          { y: 70, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.9,
-            delay: i * 0.15,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: card,
-              start: "top 88%",
-            },
-          }
-        );
+        gsap.from(card, {
+          y: 70,
+          opacity: 0,
+          duration: 0.9,
+          delay: i * 0.15,
+          ease: "power3.out",
+          immediateRender: false,
+          scrollTrigger: { trigger: card, start: "top 88%" },
+        });
       });
     }, sectionRef);
 
@@ -86,13 +71,8 @@ export default function BlogSection() {
   }, []);
 
   return (
-    <section
-      ref={sectionRef}
-      id="articles"
-      className="py-28 md:py-40 bg-white overflow-hidden"
-    >
+    <section ref={sectionRef} id="articles" className="py-28 md:py-40 bg-white overflow-hidden">
       <div className="max-w-[1400px] mx-auto px-8 md:px-16">
-        {/* Header */}
         <div
           ref={headlineRef}
           className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-20"
@@ -111,17 +91,13 @@ export default function BlogSection() {
           </button>
         </div>
 
-        {/* Articles Grid */}
         <div className="grid md:grid-cols-3 gap-10">
           {articles.map((article, i) => (
             <article
               key={article.title}
-              ref={(el) => {
-                cardsRef.current[i] = el;
-              }}
+              ref={(el) => { cardsRef.current[i] = el; }}
               className="group cursor-pointer"
             >
-              {/* Image */}
               <div className="relative h-64 overflow-hidden mb-7">
                 <Image
                   src={article.image}
@@ -130,7 +106,6 @@ export default function BlogSection() {
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                   unoptimized
                 />
-                {/* Category badge */}
                 <div className="absolute bottom-5 left-5">
                   <span className="bg-white text-[#0a0a0a] text-[10px] tracking-[0.25em] uppercase px-4 py-2">
                     {article.category}
@@ -138,28 +113,17 @@ export default function BlogSection() {
                 </div>
               </div>
 
-              {/* Meta */}
               <div className="flex items-center gap-4 mb-4">
-                <span className="text-[11px] tracking-[0.15em] text-[#0a0a0a]/40">
-                  {article.date}
-                </span>
+                <span className="text-[11px] tracking-[0.15em] text-[#0a0a0a]/40">{article.date}</span>
                 <span className="w-1 h-1 rounded-full bg-[#0a0a0a]/20" />
-                <span className="text-[11px] tracking-[0.15em] text-[#0a0a0a]/40">
-                  {article.readTime}
-                </span>
+                <span className="text-[11px] tracking-[0.15em] text-[#0a0a0a]/40">{article.readTime}</span>
               </div>
 
-              {/* Title */}
               <h3 className="font-cormorant text-2xl font-light text-[#0a0a0a] leading-snug mb-4 group-hover:italic transition-all duration-300">
                 {article.title}
               </h3>
+              <p className="text-[#0a0a0a]/55 text-sm leading-relaxed mb-6">{article.excerpt}</p>
 
-              {/* Excerpt */}
-              <p className="text-[#0a0a0a]/55 text-sm leading-relaxed mb-6">
-                {article.excerpt}
-              </p>
-
-              {/* Read more */}
               <div className="flex items-center gap-3 text-[11px] tracking-[0.25em] uppercase text-[#0a0a0a]/50 group-hover:text-[#0a0a0a] transition-colors">
                 Read Article
                 <span className="w-5 h-px bg-current transition-all duration-300 group-hover:w-10" />

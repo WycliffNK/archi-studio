@@ -21,21 +21,14 @@ export default function ClientLogos() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.fromTo(
-        sectionRef.current,
-        { opacity: 0 },
-        {
-          opacity: 1,
-          duration: 1,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 90%",
-          },
-        }
-      );
+      gsap.from(sectionRef.current, {
+        opacity: 0,
+        duration: 1,
+        ease: "power2.out",
+        immediateRender: false,
+        scrollTrigger: { trigger: sectionRef.current, start: "top 90%" },
+      });
 
-      // Marquee
       const track = trackRef.current;
       if (!track) return;
       const totalWidth = track.scrollWidth / 2;
@@ -64,10 +57,7 @@ export default function ClientLogos() {
       <div className="relative overflow-hidden">
         <div ref={trackRef} className="flex gap-0 whitespace-nowrap">
           {allClients.map((client, i) => (
-            <div
-              key={`${client}-${i}`}
-              className="inline-flex items-center gap-16 px-14"
-            >
+            <div key={`${client}-${i}`} className="inline-flex items-center gap-16 px-14">
               <span className="font-cormorant text-xl font-light tracking-[0.15em] text-[#0a0a0a]/30 hover:text-[#0a0a0a]/70 transition-colors duration-300 cursor-pointer select-none">
                 {client}
               </span>

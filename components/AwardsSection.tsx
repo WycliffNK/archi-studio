@@ -41,55 +41,37 @@ export default function AwardsSection() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.fromTo(
-        headlineRef.current,
-        { y: 50, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 1,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: headlineRef.current,
-            start: "top 85%",
-          },
-        }
-      );
+      gsap.from(headlineRef.current, {
+        y: 50,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.out",
+        immediateRender: false,
+        scrollTrigger: { trigger: headlineRef.current, start: "top 85%" },
+      });
 
       itemsRef.current.forEach((item, i) => {
         if (!item) return;
         const line = linesRef.current[i];
 
-        gsap.fromTo(
-          item,
-          { x: -40, opacity: 0 },
-          {
-            x: 0,
-            opacity: 1,
-            duration: 0.8,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: item,
-              start: "top 88%",
-            },
-          }
-        );
+        gsap.from(item, {
+          x: -40,
+          opacity: 0,
+          duration: 0.8,
+          ease: "power3.out",
+          immediateRender: false,
+          scrollTrigger: { trigger: item, start: "top 88%" },
+        });
 
         if (line) {
-          gsap.fromTo(
-            line,
-            { scaleX: 0 },
-            {
-              scaleX: 1,
-              duration: 0.8,
-              delay: 0.2,
-              ease: "power3.out",
-              scrollTrigger: {
-                trigger: item,
-                start: "top 88%",
-              },
-            }
-          );
+          gsap.from(line, {
+            scaleX: 0,
+            duration: 0.8,
+            delay: 0.2,
+            ease: "power3.out",
+            immediateRender: false,
+            scrollTrigger: { trigger: item, start: "top 88%" },
+          });
         }
       });
     }, sectionRef);
@@ -117,25 +99,19 @@ export default function AwardsSection() {
           {awards.map((award, i) => (
             <div
               key={award.year}
-              ref={(el) => {
-                itemsRef.current[i] = el;
-              }}
+              ref={(el) => { itemsRef.current[i] = el; }}
               className="group relative"
             >
               <span
-                ref={(el) => {
-                  linesRef.current[i] = el;
-                }}
+                ref={(el) => { linesRef.current[i] = el; }}
                 className="absolute top-0 left-0 w-full h-px bg-white/10 origin-left"
               />
-
-              <div className="grid md:grid-cols-[120px_1fr_1fr] gap-6 md:gap-12 py-10 md:py-12 group-hover:bg-white/3 transition-colors duration-500 px-0 md:px-2">
+              <div className="grid md:grid-cols-[120px_1fr_1fr] gap-6 md:gap-12 py-10 md:py-12 group-hover:bg-white/[0.03] transition-colors duration-500">
                 <div>
                   <span className="font-cormorant text-white/30 text-5xl font-light group-hover:text-white/60 transition-colors duration-300">
                     {award.year}
                   </span>
                 </div>
-
                 <div>
                   <h3 className="text-white font-light text-xl mb-2 group-hover:italic transition-all duration-300">
                     {award.title}
@@ -144,7 +120,6 @@ export default function AwardsSection() {
                     {award.category}
                   </p>
                 </div>
-
                 <div className="flex items-center justify-between">
                   <p className="text-white/45 text-sm leading-relaxed max-w-sm">
                     {award.description}
@@ -154,7 +129,6 @@ export default function AwardsSection() {
                   </span>
                 </div>
               </div>
-
               {i === awards.length - 1 && (
                 <span className="absolute bottom-0 left-0 w-full h-px bg-white/10" />
               )}
