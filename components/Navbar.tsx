@@ -22,7 +22,7 @@ export default function Navbar() {
 
   return (
     <>
-      <header ref={navRef} className="fixed top-0 left-0 right-0 z-50 py-6 px-8 md:px-16">
+      <header ref={navRef} className="absolute top-0 left-0 right-0 z-50 py-6 px-8 md:px-16">
         <div className="flex items-center justify-between relative">
           {/* Social Links — Left */}
           <div className="flex gap-6 text-[11px] tracking-[0.2em] text-white/60">
