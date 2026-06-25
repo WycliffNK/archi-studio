@@ -35,7 +35,7 @@ export default function Navbar() {
 
           {/* Logo — Centered */}
           <Link href="#" className="absolute left-1/2 -translate-x-1/2 hover:opacity-80 transition-opacity">
-            <Image src="/logo.svg" alt="Logo" width={52} height={50} priority />
+            <Image src="/logo.png" alt="Logo" width={52} height={50} priority />
           </Link>
 
           {/* Hamburger — Right (hidden when menu open) */}
@@ -94,7 +94,7 @@ export default function Navbar() {
 
             {/* Large logo */}
             <div className="flex-shrink-0">
-              <Image src="/logo.svg" alt="Logo" width={110} height={105} />
+              <Image src="/logo.png" alt="Logo" width={110} height={105} />
             </div>
 
             {/* Contact info */}
