@@ -180,7 +180,21 @@ export default function HeroSection() {
                     </svg>
                   </span>
                 </span>
-                <span className="transition-opacity duration-300 group-hover:opacity-60">Explore project</span>
+                {/* Text roll — exits up, clone enters from below */}
+                <span className="relative overflow-hidden block">
+                  <span
+                    className="block transition-transform duration-500 group-hover:-translate-y-full"
+                    style={{ transitionTimingFunction: "cubic-bezier(0.76,0,0.24,1)" }}
+                  >
+                    Explore project
+                  </span>
+                  <span
+                    className="absolute inset-0 block translate-y-full transition-transform duration-500 group-hover:translate-y-0"
+                    style={{ transitionTimingFunction: "cubic-bezier(0.76,0,0.24,1)" }}
+                  >
+                    Explore project
+                  </span>
+                </span>
               </a>
             </div>
           </div>
