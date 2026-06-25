@@ -91,34 +91,17 @@ export default function AboutSection() {
 
           {/* Left: signature SVG + heading */}
           <div ref={leftRef}>
-            {/* Signature — SVG cursive path */}
-            <svg
-              viewBox="0 0 220 55"
-              xmlns="http://www.w3.org/2000/svg"
-              className="mb-8 opacity-70"
-              style={{ width: "180px", height: "45px" }}
+            {/* Signature — cursive script */}
+            <p
+              className="font-dancing text-[#efff02] mb-8 leading-none"
+              style={{ fontSize: "clamp(28px, 4vw, 46px)" }}
             >
-              <path
-                d="M5 38 C15 10, 28 8, 38 28 C45 42, 52 44, 60 30 C68 16, 75 12, 85 32 C92 46, 100 48, 110 30 C118 16, 126 12, 136 30 C143 42, 152 46, 162 32 C170 20, 180 16, 195 30 C202 36, 208 38, 215 35"
-                fill="none"
-                stroke="white"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M5 46 Q60 50, 120 46 Q170 42, 215 45"
-                fill="none"
-                stroke="white"
-                strokeWidth="0.8"
-                strokeLinecap="round"
-                opacity="0.4"
-              />
-            </svg>
+              Herman miller
+            </p>
 
             <h4
-              className="text-white font-antonio font-bold leading-tight"
-              style={{ fontSize: "clamp(28px, 3.5vw, 48px)", letterSpacing: "-1.5px" }}
+              className="text-white font-extrabold leading-tight"
+              style={{ fontSize: "clamp(28px, 3.5vw, 48px)", letterSpacing: "-0.5px" }}
             >
               Delivering awesome quality, effective and inspiring built gorgeous space.
             </h4>
@@ -166,15 +149,17 @@ export default function AboutSection() {
               ref={(el) => { featuresRef.current[i] = el; }}
               className="relative"
             >
-              <div className="h-px bg-[#3E3E3E] w-full mb-6 hidden md:block" />
-              <div className="flex items-start justify-between gap-4">
+              <div className="flex items-start justify-between gap-4 py-5">
                 <p className="text-[#737373] text-lg leading-relaxed flex-1">
                   {f.text}
                 </p>
-                <span className="text-[#efff02] font-medium text-lg flex-shrink-0 mt-0.5">
+                <span className="text-[#efff02] font-antonio font-semibold text-xl flex-shrink-0 mt-0.5">
                   {f.number}
                 </span>
               </div>
+              {i < features.length - 1 && (
+                <div className="h-px bg-[#3E3E3E] w-full" />
+              )}
             </div>
           ))}
         </div>

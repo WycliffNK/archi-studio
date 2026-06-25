@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Antonio, Plus_Jakarta_Sans } from "next/font/google";
+import { Antonio, Plus_Jakarta_Sans, Dancing_Script } from "next/font/google";
 import "./globals.css";
 
 const antonio = Antonio({
@@ -15,6 +15,12 @@ const plusJakarta = Plus_Jakarta_Sans({
   style: ["normal", "italic"],
 });
 
+const dancingScript = Dancing_Script({
+  variable: "--font-dancing",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
+
 export const metadata: Metadata = {
   title: "ArchiStudio — Architecture & Interior Design",
   description: "Award-winning architecture firm creating spaces that inspire and endure.",
@@ -26,7 +32,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${antonio.variable} ${plusJakarta.variable} h-full`}>
+    <html lang="en" className={`${antonio.variable} ${plusJakarta.variable} ${dancingScript.variable} h-full`}>
       <body className="min-h-full flex flex-col bg-[#191919] text-white">
         {children}
       </body>
