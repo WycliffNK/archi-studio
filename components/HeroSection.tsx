@@ -22,6 +22,18 @@ const slides = [
   },
 ];
 
+function SplitChars({ text }: { text: string }) {
+  return (
+    <>
+      {text.split("").map((char, i) => (
+        <span key={i} data-char style={{ display: "inline-block", whiteSpace: "pre" }}>
+          {char}
+        </span>
+      ))}
+    </>
+  );
+}
+
 export default function HeroSection() {
   const [displayCurrent, setDisplayCurrent] = useState(0);
   const slidesElRef = useRef<(HTMLDivElement | null)[]>([]);
@@ -47,6 +59,10 @@ export default function HeroSection() {
     const nextKb = nextEl.querySelector("[data-kb]");
     if (nextKb) gsap.set(nextKb, { filter: "blur(10px)", x: 60, y: 60 });
 
+    // Pre-set next chars to enter state
+    const nextChars = nextEl.querySelectorAll("[data-char]");
+    gsap.set(nextChars, { x: 50, opacity: 0, filter: "blur(20px)" });
+
     const tl = gsap.timeline({
       onComplete: () => {
         gsap.set(currentEl, { zIndex: 0 });
@@ -56,20 +72,26 @@ export default function HeroSection() {
       },
     });
 
-    tl.to(currentEl.querySelectorAll("[data-slide-text]"), {
-      y: -50,
-      opacity: 0,
-      duration: 0.5,
-      stagger: 0.06,
-      ease: "power2.in",
+    // Exit: chars blur out backward, other text elements slide up
+    tl.to(currentEl.querySelectorAll("[data-char]"), {
+      opacity: 0, filter: "blur(15px)", x: -30,
+      duration: 0.3, stagger: { each: 0.02, from: "end" }, ease: "power2.in",
     })
+      .to(currentEl.querySelectorAll("[data-slide-text]"), {
+        y: -40, opacity: 0, duration: 0.4, stagger: 0.06, ease: "power2.in",
+      }, "<0.1")
       .to(nextEl, { opacity: 1, duration: 0.9, ease: "power2.inOut" }, "<0.1")
       .to(nextKb, { filter: "blur(0px)", x: 0, y: 0, duration: 2.5, ease: "power3.inOut" }, "<")
+      // Enter: chars blur in forward
+      .to(nextChars, {
+        x: 0, opacity: 1, filter: "blur(0px)",
+        duration: 1.2, stagger: 0.08, ease: "power3.inOut",
+      }, "<0.4")
       .fromTo(
         nextEl.querySelectorAll("[data-slide-text]"),
-        { y: 60, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.9, stagger: 0.1, ease: "power3.out" },
-        "<0.35"
+        { y: 50, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.9, stagger: 0.12, ease: "power3.out" },
+        "<0.2"
       );
   }, []);
 
@@ -85,6 +107,12 @@ export default function HeroSection() {
         { filter: "blur(0px)", x: 0, y: 0, duration: 2.5, ease: "power3.inOut", delay: 0.3 }
       );
     }
+    // Chars: start blurred+offset, animate in character by character
+    gsap.fromTo(
+      firstSlide.querySelectorAll("[data-char]"),
+      { x: 50, opacity: 0, filter: "blur(20px)" },
+      { x: 0, opacity: 1, filter: "blur(0px)", duration: 1.2, stagger: 0.08, ease: "power3.inOut", delay: 1.2 }
+    );
     gsap.fromTo(
       firstSlide.querySelectorAll("[data-slide-text]"),
       { y: 80, opacity: 0 },
@@ -151,14 +179,13 @@ export default function HeroSection() {
           {/* Title + button — bottom left */}
           <div className="absolute bottom-24 md:bottom-32 left-8 md:left-32 xl:left-44 max-w-2xl">
             <h1
-              data-slide-text
               className="text-white font-medium leading-none mb-8"
               style={{
                 fontSize: "clamp(80px, 11vw, 170px)",
                 letterSpacing: "clamp(-6px, -0.84vw, -12px)",
               }}
             >
-              {slide.title}
+              <SplitChars text={slide.title} />
             </h1>
             <div data-slide-text>
               <a
