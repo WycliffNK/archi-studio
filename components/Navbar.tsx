@@ -45,7 +45,7 @@ export default function Navbar() {
             href="#"
             className="absolute left-1/2 -translate-x-1/2 hover:opacity-80 transition-opacity"
           >
-            <Image src="/logo.svg" alt="Logo" width={68} height={57} priority />
+            <Image src="/logo.svg" alt="Logo" width={52} height={52} priority />
           </Link>
 
           {/* Hamburger - Right */}
