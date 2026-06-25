@@ -160,12 +160,14 @@ export default function Navbar() {
 
           {/* Right panel — Nav links */}
           <div className="flex flex-col justify-center px-8 md:px-14 lg:px-20 pt-24 md:pt-0">
-            <ul className="flex flex-col">
+            <ul className="flex flex-col group/nav">
               {navLinks.map((item, i) => (
                 <li key={item}>
                   <Link
                     href="#"
-                    className="font-antonio font-light text-white/25 hover:text-white transition-colors duration-300 block leading-[1.05]"
+                    className={`font-antonio font-light block leading-[1.05] transition-colors duration-300 group-hover/nav:text-white/25 hover:!text-white ${
+                      i === 0 ? "text-white/25" : "text-white"
+                    }`}
                     style={{
                       fontSize: "clamp(48px, 7.5vw, 100px)",
                       transitionDelay: menuOpen ? `${i * 45}ms` : "0ms",
