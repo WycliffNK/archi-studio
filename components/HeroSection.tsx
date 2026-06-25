@@ -25,9 +25,13 @@ const slides = [
 function SplitChars({ text }: { text: string }) {
   return (
     <>
-      {text.split("").map((char, i) => (
-        <span key={i} data-char style={{ display: "inline-block", whiteSpace: "pre" }}>
-          {char}
+      {text.split(" ").map((word, wi) => (
+        <span key={wi} style={{ display: "block" }}>
+          {word.split("").map((char, ci) => (
+            <span key={ci} data-char style={{ display: "inline-block" }}>
+              {char}
+            </span>
+          ))}
         </span>
       ))}
     </>
