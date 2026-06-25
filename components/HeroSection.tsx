@@ -150,14 +150,37 @@ export default function HeroSection() {
             <div data-slide-text>
               <a
                 href="#"
-                className="inline-flex items-center gap-4 text-white text-sm tracking-[0.15em] uppercase font-medium hover:opacity-70 transition-opacity duration-300"
+                className="group inline-flex items-center gap-4 text-white text-sm tracking-[0.15em] uppercase font-medium"
               >
-                <span className="w-12 h-12 border border-white/50 rounded-full flex items-center justify-center flex-shrink-0 hover:border-white transition-colors">
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                    <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
+                {/* Circle — fills white on hover, clips both arrows */}
+                <span className="relative w-12 h-12 rounded-full overflow-hidden flex-shrink-0 border border-white/50 group-hover:border-white group-hover:bg-white transition-colors duration-500">
+                  {/* Arrow 1 — exits top-right on hover */}
+                  <span
+                    className="absolute inset-0 flex items-center justify-center transition-transform duration-500"
+                    style={{ transitionTimingFunction: "cubic-bezier(0.76,0,0.24,1)" }}
+                  >
+                    <svg
+                      width="16" height="16" viewBox="0 0 16 16" fill="none"
+                      className="transition-transform duration-500 group-hover:translate-x-full group-hover:-translate-y-full"
+                      style={{ transitionTimingFunction: "cubic-bezier(0.76,0,0.24,1)" }}
+                    >
+                      <path d="M3 8h10M9 4l4 4-4 4" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </span>
+                  {/* Arrow 2 — enters from bottom-left on hover */}
+                  <span
+                    className="absolute inset-0 flex items-center justify-center"
+                  >
+                    <svg
+                      width="16" height="16" viewBox="0 0 16 16" fill="none"
+                      className="transition-transform duration-500 -translate-x-full translate-y-full group-hover:translate-x-0 group-hover:translate-y-0"
+                      style={{ transitionTimingFunction: "cubic-bezier(0.76,0,0.24,1)" }}
+                    >
+                      <path d="M3 8h10M9 4l4 4-4 4" stroke="#191919" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </span>
                 </span>
-                <span>Explore project</span>
+                <span className="transition-opacity duration-300 group-hover:opacity-60">Explore project</span>
               </a>
             </div>
           </div>
