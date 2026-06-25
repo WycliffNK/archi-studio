@@ -44,6 +44,9 @@ export default function HeroSection() {
     gsap.set(nextEl, { zIndex: 10, opacity: 0 });
     gsap.set(currentEl, { zIndex: 5 });
 
+    const nextKb = nextEl.querySelector("[data-kb]");
+    if (nextKb) gsap.set(nextKb, { filter: "blur(10px)", x: 60, y: 60 });
+
     const tl = gsap.timeline({
       onComplete: () => {
         gsap.set(currentEl, { zIndex: 0 });
@@ -61,6 +64,7 @@ export default function HeroSection() {
       ease: "power2.in",
     })
       .to(nextEl, { opacity: 1, duration: 0.9, ease: "power2.inOut" }, "<0.1")
+      .to(nextKb, { filter: "blur(0px)", x: 0, y: 0, duration: 2.5, ease: "power3.inOut" }, "<")
       .fromTo(
         nextEl.querySelectorAll("[data-slide-text]"),
         { y: 60, opacity: 0 },
@@ -74,6 +78,13 @@ export default function HeroSection() {
     if (!firstSlide) return;
 
     gsap.set(firstSlide, { zIndex: 1, opacity: 1 });
+    const firstKb = firstSlide.querySelector("[data-kb]");
+    if (firstKb) {
+      gsap.fromTo(firstKb,
+        { filter: "blur(10px)", x: 60, y: 60 },
+        { filter: "blur(0px)", x: 0, y: 0, duration: 2.5, ease: "power3.inOut", delay: 0.3 }
+      );
+    }
     gsap.fromTo(
       firstSlide.querySelectorAll("[data-slide-text]"),
       { y: 80, opacity: 0 },
@@ -108,15 +119,17 @@ export default function HeroSection() {
           className="absolute inset-0"
           style={{ zIndex: 0, opacity: 0 }}
         >
-          {/* Background image */}
-          <Image
-            src={slide.image}
-            alt={slide.title}
-            fill
-            className="object-cover"
-            priority={index === 0}
-            unoptimized
-          />
+          {/* Background image — Ken Burns wrapper */}
+          <div data-kb className="absolute inset-0">
+            <Image
+              src={slide.image}
+              alt={slide.title}
+              fill
+              className="object-cover"
+              priority={index === 0}
+              unoptimized
+            />
+          </div>
           {/* Gradient overlays */}
           <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/20" />
