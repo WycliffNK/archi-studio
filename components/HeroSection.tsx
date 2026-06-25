@@ -246,20 +246,6 @@ export default function HeroSection() {
         ))}
       </div>
 
-      {/* Bottom tagline */}
-      <div className="absolute bottom-6 left-8 md:left-16 z-20">
-        <p className="text-white/35 text-[11px] tracking-[0.3em] uppercase">
-          Let&apos;s build something great together
-        </p>
-      </div>
-
-      {/* Slide counter — bottom right */}
-      <div className="absolute bottom-6 right-24 z-20 hidden md:flex items-baseline gap-1">
-        <span className="text-3xl text-white/80 font-light">
-          {slides[displayCurrent].id}
-        </span>
-        <span className="text-white/30 text-sm">/ 03</span>
-      </div>
     </section>
   );
 }
