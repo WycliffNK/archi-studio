@@ -164,23 +164,25 @@ export default function HeroSection() {
         </div>
       ))}
 
-      {/* Right side nav — white arrow button + yellow slide number */}
-      <div className="absolute right-0 md:right-8 bottom-1/2 translate-y-1/2 z-20 hidden md:flex flex-col">
-        <button
-          onClick={nextSlide}
-          className="w-20 h-20 bg-white flex items-center justify-center hover:bg-[#efff02] transition-colors duration-300 group"
-          aria-label="Next slide"
-        >
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-[#191919]">
-            <path d="M4 10h12M12 5l5 5-5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        </button>
+      {/* Right side nav — yellow slide number + white arrow button, side by side */}
+      <div className="absolute right-0 top-1/2 -translate-y-1/2 z-20 hidden md:flex flex-row items-stretch">
+        {/* Yellow box — next slide number */}
         <div
-          className="w-20 h-20 bg-[#efff02] flex items-center justify-center font-antonio text-[#191919] font-bold select-none"
-          style={{ fontSize: "32px", letterSpacing: "-2px" }}
+          className="w-28 h-28 lg:w-32 lg:h-32 bg-[#efff02] flex items-center justify-center font-antonio font-bold text-[#191919] select-none"
+          style={{ fontSize: "clamp(28px, 3vw, 40px)", letterSpacing: "-2px" }}
         >
           {slides[(displayCurrent + 1) % slides.length].id}
         </div>
+        {/* White button — next slide arrow */}
+        <button
+          onClick={nextSlide}
+          className="w-28 h-28 lg:w-32 lg:h-32 bg-white flex items-center justify-center hover:bg-[#efff02] transition-colors duration-300"
+          aria-label="Next slide"
+        >
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" className="text-[#191919]">
+            <path d="M4 11h14M13 5l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </button>
       </div>
 
       {/* Dot navigation */}
