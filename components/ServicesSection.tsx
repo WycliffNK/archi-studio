@@ -161,7 +161,7 @@ export default function ServicesSection() {
                 <div className="bg-[#191919] py-6 px-0">
                   <a
                     href="#"
-                    className="font-antonio text-white text-xl font-medium block mb-3 hover:text-[#efff02] transition-colors duration-300"
+                    className="text-white text-xl font-medium block mb-3 hover:text-[#efff02] transition-colors duration-300"
                     style={{ fontSize: "22px" }}
                   >
                     {service.title}

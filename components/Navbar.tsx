@@ -165,7 +165,7 @@ export default function Navbar() {
                 <li key={item}>
                   <Link
                     href="#"
-                    className={`font-antonio font-light block leading-[1.05] transition-colors duration-300 group-hover/nav:text-white/25 hover:!text-white ${
+                    className={`font-light block leading-[1.05] transition-colors duration-300 group-hover/nav:text-white/25 hover:!text-white ${
                       i === 0 ? "text-white/25" : "text-white"
                     }`}
                     style={{

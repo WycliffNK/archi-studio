@@ -49,7 +49,7 @@ export default function ClientLogos() {
               ref={(el) => { logosRef.current[i] = el; }}
               className="opacity-30 hover:opacity-60 transition-opacity duration-300"
             >
-              <span className="font-antonio text-white text-2xl tracking-[4px] font-bold">
+              <span className="text-white text-2xl tracking-[4px] font-bold">
                 {client.name}
               </span>
             </div>

@@ -124,7 +124,7 @@ export default function HeroSection() {
           {/* Slide number — outline, left side */}
           <div
             data-slide-text
-            className="absolute left-8 md:left-16 top-1/2 -translate-y-1/2 font-antonio font-bold leading-none select-none pointer-events-none hidden md:block"
+            className="absolute left-8 md:left-16 top-1/2 -translate-y-1/2 font-light leading-none select-none pointer-events-none hidden md:block"
             style={{
               fontSize: "clamp(120px, 14vw, 200px)",
               WebkitTextStroke: "2px #efff02",
@@ -139,7 +139,7 @@ export default function HeroSection() {
           <div className="absolute bottom-24 md:bottom-32 left-8 md:left-32 xl:left-44 max-w-2xl">
             <h1
               data-slide-text
-              className="font-antonio text-white font-medium leading-none mb-8"
+              className="text-white font-light leading-none mb-8"
               style={{
                 fontSize: "clamp(80px, 11vw, 170px)",
                 letterSpacing: "-6px",
@@ -205,7 +205,7 @@ export default function HeroSection() {
       <div className="absolute right-0 top-1/2 -translate-y-1/2 z-20 hidden md:flex flex-row items-stretch">
         {/* Yellow box — next slide number */}
         <div
-          className="w-28 h-28 lg:w-32 lg:h-32 bg-[#efff02] flex items-center justify-center font-antonio font-bold text-[#191919] select-none"
+          className="w-28 h-28 lg:w-32 lg:h-32 bg-[#efff02] flex items-center justify-center font-bold text-[#191919] select-none"
           style={{ fontSize: "clamp(28px, 3vw, 40px)", letterSpacing: "-2px" }}
         >
           {slides[(displayCurrent + 1) % slides.length].id}
@@ -254,7 +254,7 @@ export default function HeroSection() {
 
       {/* Slide counter — bottom right */}
       <div className="absolute bottom-6 right-24 z-20 hidden md:flex items-baseline gap-1">
-        <span className="font-antonio text-3xl text-white/80 font-light">
+        <span className="text-3xl text-white/80 font-light">
           {slides[displayCurrent].id}
         </span>
         <span className="text-white/30 text-sm">/ 03</span>

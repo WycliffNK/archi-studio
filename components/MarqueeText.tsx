@@ -34,7 +34,7 @@ export default function MarqueeText() {
         {items.map((word, i) => (
           <span
             key={i}
-            className={`font-antonio font-bold select-none flex-shrink-0 px-8 ${
+            className={`font-bold select-none flex-shrink-0 px-8 ${
               i % 2 === 0
                 ? "text-[#3E3E3E]"
                 : "text-white"

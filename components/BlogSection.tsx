@@ -119,7 +119,7 @@ export default function BlogSection() {
 
       {/* "architecture" outline text at bottom */}
       <div
-        className="text-center font-antonio font-bold select-none pointer-events-none leading-none overflow-hidden"
+        className="text-center font-bold select-none pointer-events-none leading-none overflow-hidden"
         style={{
           fontSize: "clamp(80px, 13vw, 200px)",
           WebkitTextStroke: "1px #3E3E3E",

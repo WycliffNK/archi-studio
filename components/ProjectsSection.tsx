@@ -148,7 +148,7 @@ export default function ProjectsSection() {
         {/* Vertical "Recent projects" label */}
         <div className="absolute top-0 left-0 z-10 h-[270px] w-[50px] bg-[#efff02] flex items-center justify-center">
           <span
-            className="font-antonio font-bold text-[#191919] uppercase tracking-[2px] select-none"
+            className="font-bold text-[#191919] uppercase tracking-[2px] select-none"
             style={{
               fontSize: "13px",
               writingMode: "vertical-rl",
@@ -184,7 +184,7 @@ export default function ProjectsSection() {
                     {project.category}
                   </span>
                   <h2
-                    className="font-antonio text-[#191919] font-semibold mb-5 leading-tight"
+                    className="text-[#191919] font-semibold mb-5 leading-tight"
                     style={{ fontSize: "clamp(28px, 3vw, 42px)", letterSpacing: "-2px" }}
                   >
                     {project.title}
@@ -250,13 +250,13 @@ export default function ProjectsSection() {
               <div className="flex items-start justify-center gap-1 mb-2">
                 <span
                   ref={(el) => { counterEls.current[i] = el; }}
-                  className="font-antonio text-white font-light"
+                  className="text-white font-light"
                   style={{ fontSize: "clamp(50px, 6vw, 80px)", lineHeight: 1 }}
                 >
                   0
                 </span>
                 <span
-                  className="font-antonio text-white font-light"
+                  className="text-white font-light"
                   style={{ fontSize: "clamp(50px, 6vw, 80px)", lineHeight: 1 }}
                 >
                   {c.suffix}
@@ -291,7 +291,7 @@ export default function ProjectsSection() {
                 }`}
               >
                 <p
-                  className="font-antonio text-white font-extralight leading-snug"
+                  className="text-white font-extralight leading-snug"
                   style={{ fontSize: "clamp(20px, 2.5vw, 28px)", lineHeight: "1.7" }}
                 >
                   {t.quote}{" "}

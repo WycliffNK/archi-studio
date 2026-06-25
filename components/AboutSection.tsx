@@ -116,7 +116,7 @@ export default function AboutSection() {
             >
               <div className="absolute bottom-0 left-0 w-full h-full rounded-full bg-[#efff02]" />
               <span
-                className="absolute left-0 w-full text-center font-antonio font-bold text-[#191919] leading-none z-10 select-none"
+                className="absolute left-0 w-full text-center font-extrabold text-[#191919] leading-none z-10 select-none"
                 style={{
                   fontSize: "clamp(150px, 16vw, 215px)",
                   letterSpacing: "-8px",
@@ -149,7 +149,7 @@ export default function AboutSection() {
               <p className="text-[#737373] text-sm leading-relaxed flex-1">
                 {f.text}
               </p>
-              <span className="text-[#efff02] font-antonio font-semibold text-base flex-shrink-0">
+              <span className="text-[#efff02] font-semibold text-base flex-shrink-0">
                 {f.number}
               </span>
             </div>

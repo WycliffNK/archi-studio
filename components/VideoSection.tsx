@@ -59,7 +59,7 @@ export default function VideoSection() {
 
           {/* "we create modernity" */}
           <h2
-            className="font-antonio font-medium text-center leading-tight z-10 px-8"
+            className="font-medium text-center leading-tight z-10 px-8"
             style={{ fontSize: "clamp(36px, 5vw, 60px)", letterSpacing: "-2px" }}
           >
             we create{" "}
@@ -68,7 +68,7 @@ export default function VideoSection() {
 
           {/* "architecture" outline text at bottom */}
           <div
-            className="absolute bottom-[-20px] left-0 right-0 text-center font-antonio font-bold select-none pointer-events-none leading-none"
+            className="absolute bottom-[-20px] left-0 right-0 text-center font-bold select-none pointer-events-none leading-none"
             style={{
               fontSize: "clamp(80px, 12vw, 140px)",
               WebkitTextStroke: "1px rgba(255,255,255,0.15)",

@@ -65,13 +65,13 @@ export default function Footer() {
           <div className="h-px w-16 bg-[#efff02] hidden sm:block flex-shrink-0" />
           <a
             href="mailto:hello@crafto.com"
-            className="text-[#efff02] font-medium font-antonio"
+            className="text-[#efff02] font-medium"
             style={{ fontSize: "clamp(18px, 2vw, 26px)" }}
           >
             hello@crafto.com
           </a>
           <div className="sm:ml-auto">
-            <Link href="#" className="font-antonio text-white text-xl tracking-[0.1em]">
+            <Link href="#" className="text-white text-xl tracking-[0.1em]">
               CRAFTO
             </Link>
           </div>
