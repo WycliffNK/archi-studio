@@ -196,13 +196,26 @@ export default function HeroSection() {
         >
           {slides[(displayCurrent + 1) % slides.length].id}
         </div>
-        {/* White button — next slide arrow */}
+        {/* White button — next slide arrow with diagonal swap on hover */}
         <button
           onClick={nextSlide}
-          className="w-28 h-28 lg:w-32 lg:h-32 bg-white flex items-center justify-center hover:bg-[#efff02] transition-colors duration-300"
+          className="group w-28 h-28 lg:w-32 lg:h-32 bg-white hover:bg-[#efff02] transition-colors duration-500 relative overflow-hidden flex items-center justify-center"
           aria-label="Next slide"
         >
-          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" className="text-[#191919]">
+          {/* Arrow 1 — exits top-right on hover */}
+          <svg
+            width="22" height="22" viewBox="0 0 22 22" fill="none"
+            className="absolute transition-transform duration-500 group-hover:translate-x-[400%] group-hover:-translate-y-[400%] text-[#191919]"
+            style={{ transitionTimingFunction: "cubic-bezier(0.76,0,0.24,1)" }}
+          >
+            <path d="M4 11h14M13 5l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+          {/* Arrow 2 — enters from bottom-left on hover */}
+          <svg
+            width="22" height="22" viewBox="0 0 22 22" fill="none"
+            className="absolute -translate-x-[400%] translate-y-[400%] transition-transform duration-500 group-hover:translate-x-0 group-hover:translate-y-0 text-[#191919]"
+            style={{ transitionTimingFunction: "cubic-bezier(0.76,0,0.24,1)" }}
+          >
             <path d="M4 11h14M13 5l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </button>
