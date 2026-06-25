@@ -60,10 +60,10 @@ export default function Navbar() {
         }`}
         style={{ backgroundImage: "url('/vertical-lines.svg')", backgroundRepeat: "repeat", backgroundPosition: "center top" }}
       >
-        {/* Close button — top right white circle */}
+        {/* Close button — top right white square (matches reference .close-menu bg-white) */}
         <button
           onClick={() => setMenuOpen(false)}
-          className="absolute top-7 right-7 md:top-8 md:right-8 z-50 w-12 h-12 md:w-14 md:h-14 rounded-full bg-white flex items-center justify-center hover:bg-[#efff02] transition-colors duration-300"
+          className="absolute top-7 right-7 md:top-8 md:right-8 z-50 w-11 h-11 bg-white flex items-center justify-center hover:bg-[#efff02] transition-colors duration-300"
           aria-label="Close menu"
         >
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -156,7 +156,7 @@ export default function Navbar() {
             Let&apos;s build something{" "}
             <span className="text-white">great together</span>
           </p>
-          <div className="flex-1 h-px bg-[#efff02]/60 mx-4" />
+          <div className="w-[70px] h-px bg-[#efff02] mx-5 flex-shrink-0" />
           <a href="mailto:hello@crafto.com" className="text-[#efff02] font-medium" style={{ fontSize: "clamp(18px, 1.8vw, 26px)" }}>
             hello@crafto.com
           </a>
