@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -12,7 +11,8 @@ const features = [
     number: "01",
     text: (
       <>
-        <span className="text-white font-semibold">350+</span> very satisfied clients around the worldwide.
+        <span className="text-white font-semibold">350+</span>{" "}
+        very satisfied clients around the worldwide.
       </>
     ),
   },
@@ -20,7 +20,8 @@ const features = [
     number: "02",
     text: (
       <>
-        <span className="text-white font-semibold">200+</span> good award winning architecture agency.
+        <span className="text-white font-semibold">200+</span>{" "}
+        good award winning architecture agency.
       </>
     ),
   },
@@ -28,7 +29,8 @@ const features = [
     number: "03",
     text: (
       <>
-        <span className="text-white font-semibold">500+</span> building has been constructed with us.
+        <span className="text-white font-semibold">500+</span>{" "}
+        building has been constructed with us.
       </>
     ),
   },
@@ -86,35 +88,62 @@ export default function AboutSection() {
       <div className="max-w-[1400px] mx-auto px-8 md:px-16">
         {/* Top row */}
         <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-center mb-16 md:mb-20">
-          {/* Left: signature + heading */}
+
+          {/* Left: signature SVG + heading */}
           <div ref={leftRef}>
-            <div className="relative h-14 w-36 mb-8 opacity-60">
-              <Image
-                src="https://images.unsplash.com/photo-1600210492493-0946911123ea?w=200&q=80"
-                alt="Signature"
-                fill
-                className="object-contain grayscale"
-                unoptimized
+            {/* Signature — SVG cursive path */}
+            <svg
+              viewBox="0 0 220 55"
+              xmlns="http://www.w3.org/2000/svg"
+              className="mb-8 opacity-70"
+              style={{ width: "180px", height: "45px" }}
+            >
+              <path
+                d="M5 38 C15 10, 28 8, 38 28 C45 42, 52 44, 60 30 C68 16, 75 12, 85 32 C92 46, 100 48, 110 30 C118 16, 126 12, 136 30 C143 42, 152 46, 162 32 C170 20, 180 16, 195 30 C202 36, 208 38, 215 35"
+                fill="none"
+                stroke="white"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
-            </div>
+              <path
+                d="M5 46 Q60 50, 120 46 Q170 42, 215 45"
+                fill="none"
+                stroke="white"
+                strokeWidth="0.8"
+                strokeLinecap="round"
+                opacity="0.4"
+              />
+            </svg>
+
             <h4 className="text-white font-semibold text-2xl md:text-3xl leading-snug">
               Delivering awesome quality, effective and inspiring built gorgeous space.
             </h4>
           </div>
 
-          {/* Right: 16 circle + established text */}
-          <div ref={rightRef} className="flex items-center gap-8 md:gap-10">
-            {/* "16" circle element */}
-            <div className="relative flex-shrink-0">
-              <div className="w-[130px] h-[130px] md:w-[160px] md:h-[160px] rounded-full bg-[#efff02] relative">
-                <span
-                  className="font-antonio font-bold text-[#191919] absolute left-1/2 -translate-x-1/2 leading-none"
-                  style={{ fontSize: "clamp(80px, 10vw, 130px)", top: "-20px", letterSpacing: "-3px" }}
-                >
-                  16
-                </span>
-              </div>
+          {/* Right: "16" circle + established text */}
+          <div ref={rightRef} className="flex items-center gap-8 md:gap-12">
+
+            {/* "16" over yellow circle */}
+            <div
+              className="relative flex-shrink-0 text-center"
+              style={{ width: "210px", height: "210px" }}
+            >
+              {/* Yellow circle */}
+              <div className="absolute bottom-0 left-0 w-full h-full rounded-full bg-[#efff02]" />
+              {/* "16" text — overflows slightly above circle */}
+              <span
+                className="absolute left-0 w-full text-center font-antonio font-bold text-[#191919] leading-none z-10 select-none"
+                style={{
+                  fontSize: "clamp(120px, 14vw, 175px)",
+                  letterSpacing: "-6px",
+                  top: "-12px",
+                }}
+              >
+                16
+              </span>
             </div>
+
             <div>
               <span className="text-white text-sm font-semibold tracking-[1px] uppercase block mb-3">
                 Established for 16 years.
