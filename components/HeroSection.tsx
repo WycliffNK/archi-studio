@@ -8,17 +8,17 @@ const slides = [
   {
     id: "01",
     title: "Malena house",
-    image: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=1920&q=80",
+    image: "https://craftohtml.themezaa.com/images/demo-architecture-rev-slider-01.jpg",
   },
   {
     id: "02",
     title: "Rustic interior",
-    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1920&q=80",
+    image: "https://craftohtml.themezaa.com/images/demo-architecture-rev-slider-02.jpg",
   },
   {
     id: "03",
     title: "Monzo office",
-    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=1920&q=80",
+    image: "https://craftohtml.themezaa.com/images/demo-architecture-rev-slider-03.jpg",
   },
 ];
 
