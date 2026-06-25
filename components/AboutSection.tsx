@@ -89,41 +89,38 @@ export default function AboutSection() {
         {/* Top row */}
         <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-center mb-16 md:mb-20">
 
-          {/* Left: signature SVG + heading */}
+          {/* Left: signature + heading */}
           <div ref={leftRef}>
-            {/* Signature — cursive script */}
             <p
-              className="font-dancing text-[#efff02] mb-8 leading-none"
-              style={{ fontSize: "clamp(28px, 4vw, 46px)" }}
+              className="font-dancing text-[#efff02] mb-6 leading-none"
+              style={{ fontSize: "clamp(22px, 2.2vw, 32px)" }}
             >
               Herman miller
             </p>
 
             <h4
-              className="text-white font-extrabold leading-tight"
-              style={{ fontSize: "clamp(28px, 3.5vw, 48px)", letterSpacing: "-0.5px" }}
+              className="text-white font-extrabold leading-[1.05]"
+              style={{ fontSize: "clamp(36px, 4.2vw, 62px)", letterSpacing: "-2px" }}
             >
               Delivering awesome quality, effective and inspiring built gorgeous space.
             </h4>
           </div>
 
           {/* Right: "16" circle + established text */}
-          <div ref={rightRef} className="flex items-center gap-8 md:gap-12">
+          <div ref={rightRef} className="flex items-center gap-8 md:gap-10">
 
             {/* "16" over yellow circle */}
             <div
               className="relative flex-shrink-0 text-center"
-              style={{ width: "210px", height: "210px" }}
+              style={{ width: "280px", height: "280px" }}
             >
-              {/* Yellow circle */}
               <div className="absolute bottom-0 left-0 w-full h-full rounded-full bg-[#efff02]" />
-              {/* "16" text — overflows slightly above circle */}
               <span
                 className="absolute left-0 w-full text-center font-antonio font-bold text-[#191919] leading-none z-10 select-none"
                 style={{
-                  fontSize: "clamp(120px, 14vw, 175px)",
-                  letterSpacing: "-6px",
-                  top: "-12px",
+                  fontSize: "clamp(150px, 16vw, 215px)",
+                  letterSpacing: "-8px",
+                  top: "-18px",
                 }}
               >
                 16
@@ -131,10 +128,10 @@ export default function AboutSection() {
             </div>
 
             <div>
-              <span className="text-white font-antonio font-semibold text-sm tracking-[2px] uppercase block mb-3">
+              <span className="text-white font-extrabold text-xs tracking-[2.5px] uppercase block mb-3">
                 Established for 16 years.
               </span>
-              <p className="text-[#737373] text-sm leading-relaxed max-w-xs">
+              <p className="text-[#737373] text-sm leading-relaxed max-w-[220px]">
                 We are dedicated to providing outstanding architectural and design services that meet the functional and aesthetic.
               </p>
             </div>
@@ -147,19 +144,14 @@ export default function AboutSection() {
             <div
               key={f.number}
               ref={(el) => { featuresRef.current[i] = el; }}
-              className="relative"
+              className="border-t border-[#3E3E3E] flex items-start justify-between gap-4 pt-5 pb-2"
             >
-              <div className="flex items-start justify-between gap-4 py-5">
-                <p className="text-[#737373] text-lg leading-relaxed flex-1">
-                  {f.text}
-                </p>
-                <span className="text-[#efff02] font-antonio font-semibold text-xl flex-shrink-0 mt-0.5">
-                  {f.number}
-                </span>
-              </div>
-              {i < features.length - 1 && (
-                <div className="h-px bg-[#3E3E3E] w-full" />
-              )}
+              <p className="text-[#737373] text-sm leading-relaxed flex-1">
+                {f.text}
+              </p>
+              <span className="text-[#efff02] font-antonio font-semibold text-base flex-shrink-0">
+                {f.number}
+              </span>
             </div>
           ))}
         </div>
