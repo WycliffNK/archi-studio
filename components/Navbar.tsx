@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import gsap from "gsap";
 
 const navLinks = ["Home", "About", "Services", "Projects", "Articles", "Contact"];
@@ -42,9 +43,9 @@ export default function Navbar() {
           {/* Logo - Centered */}
           <Link
             href="#"
-            className="font-antonio text-2xl tracking-[0.1em] text-white absolute left-1/2 -translate-x-1/2 hover:opacity-80 transition-opacity"
+            className="absolute left-1/2 -translate-x-1/2 hover:opacity-80 transition-opacity"
           >
-            CRAFTO
+            <Image src="/logo.svg" alt="Logo" width={68} height={57} priority />
           </Link>
 
           {/* Hamburger - Right */}
