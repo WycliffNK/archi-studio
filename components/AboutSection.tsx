@@ -116,7 +116,10 @@ export default function AboutSection() {
               />
             </svg>
 
-            <h4 className="text-white font-semibold text-2xl md:text-3xl leading-snug">
+            <h4
+              className="text-white font-antonio font-bold leading-tight"
+              style={{ fontSize: "clamp(28px, 3.5vw, 48px)", letterSpacing: "-1.5px" }}
+            >
               Delivering awesome quality, effective and inspiring built gorgeous space.
             </h4>
           </div>
@@ -145,7 +148,7 @@ export default function AboutSection() {
             </div>
 
             <div>
-              <span className="text-white text-sm font-semibold tracking-[1px] uppercase block mb-3">
+              <span className="text-white font-antonio font-semibold text-sm tracking-[2px] uppercase block mb-3">
                 Established for 16 years.
               </span>
               <p className="text-[#737373] text-sm leading-relaxed max-w-xs">
