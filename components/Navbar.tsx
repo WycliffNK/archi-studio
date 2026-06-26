@@ -75,7 +75,7 @@ export default function Navbar() {
         <div className="relative flex-1 grid grid-cols-1 md:grid-cols-[8fr_4fr] overflow-hidden min-h-0">
 
           {/* Left panel — Footer logo + contact info rows */}
-          <div className="hidden md:flex flex-col justify-between px-14 lg:px-20 pt-20 pb-10">
+          <div className="hidden md:flex flex-col px-14 lg:px-20 pt-20 pb-10">
 
             {/* Footer logo */}
             <div className="flex-shrink-0">
@@ -83,7 +83,7 @@ export default function Navbar() {
             </div>
 
             {/* Contact info — 3 columns matching reference */}
-            <div className="grid grid-cols-3 gap-8 mt-10">
+            <div className="grid grid-cols-3 gap-8 mt-[22px]">
               <div>
                 {/* fs-14 fw-600 ls-2px text-uppercase mb-5px */}
                 <span className="text-[#efff02] text-[14px] tracking-[2px] uppercase font-semibold block mb-[5px]">
@@ -91,7 +91,7 @@ export default function Navbar() {
                 </span>
                 {/* w-90 md-w-80 */}
                 <p className="text-[#737373] text-sm leading-relaxed w-[90%]">
-                  27 Eden walk eden centre,<br />Orchard, Paris, France
+                  27 Eden walk eden centre, Orchard, Paris, France
                 </p>
               </div>
 
