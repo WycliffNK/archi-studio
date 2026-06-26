@@ -131,7 +131,8 @@ export default function ServicesSection() {
 
       {/* Slider row — outside-box-right-30: extends 30% past the container right edge */}
       <div data-srv-slider className="max-w-[1320px] mx-auto px-8 md:px-16 mb-[70px] md:mb-[90px]">
-        <div style={{ marginRight: "-30%" }}>
+        {/* outside-box-right-30 sm-outside-box-right-0 */}
+        <div className="mr-0 md:mr-[-30%]">
           <Swiper
             modules={[Autoplay]}
             slidesPerView={1}
