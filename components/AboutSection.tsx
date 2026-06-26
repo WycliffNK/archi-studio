@@ -20,34 +20,27 @@ export default function AboutSection() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Left col — fade + slide up
       gsap.from("[data-about-left]", {
         opacity: 0, y: 40, duration: 1, ease: "power3.out",
         immediateRender: false,
         scrollTrigger: { trigger: "[data-about-left]", start: "top 85%" },
       });
-
-      // Right circle + text
       gsap.from("[data-about-circle]", {
         opacity: 0, y: -15, scale: 0.8, duration: 1, ease: "power3.out",
         immediateRender: false,
         scrollTrigger: { trigger: "[data-about-circle]", start: "top 85%" },
       });
-
       gsap.from("[data-about-right-text]", {
         opacity: 0, duration: 0.8, ease: "power3.out",
         immediateRender: false,
         scrollTrigger: { trigger: "[data-about-right-text]", start: "top 85%" },
       });
-
-      // Stat rows — staggered
       gsap.from("[data-stat]", {
         opacity: 0, y: 30, duration: 0.8, stagger: 0.15, ease: "power3.out",
         immediateRender: false,
         scrollTrigger: { trigger: "[data-stat]", start: "top 88%" },
       });
     }, sectionRef);
-
     return () => ctx.revert();
   }, []);
 
@@ -63,31 +56,31 @@ export default function AboutSection() {
     >
       <div className="max-w-[1320px] mx-auto px-8 md:px-16">
 
-        {/* Top row */}
+        {/* Top row — left col + right col side by side at lg */}
         <div className="grid lg:grid-cols-2 items-center gap-12 lg:gap-20 mb-14 md:mb-16">
 
-          {/* Left: signature image + heading */}
-          <div data-about-left>
+          {/* Left: signature + heading — col-lg-6 md-mb-50px sm-mb-40px text-center text-sm-start */}
+          <div data-about-left className="text-center sm:text-left mb-10 sm:mb-10 lg:mb-0">
             <Image
               src="/signature.png"
               alt="Signature"
-              width={136}
-              height={13}
-              className="mb-5"
+              width={272}
+              height={25}
+              className="max-w-[272px] w-auto inline-block"
               unoptimized
             />
             <h4
-              className="text-white font-semibold leading-[1.15] mt-5 mb-0 w-[90%]"
-              style={{ fontSize: "clamp(22px, 2.5vw, 34px)" }}
+              className="text-white font-semibold leading-[1.2] mt-5 mb-0 w-[90%] lg:w-full"
+              style={{ fontSize: "clamp(20px, 2.2vw, 28px)" }}
             >
               Delivering awesome quality, effective and inspiring built gorgeous space.
             </h4>
           </div>
 
-          {/* Right: circle + established text */}
-          <div className="flex items-center gap-8 md:gap-10">
+          {/* Right: atropos circle + established text */}
+          <div className="flex items-center justify-center sm:justify-start gap-8 md:gap-10">
 
-            {/* Atropos 3D circle with "16" */}
+            {/* Atropos 3D circle — col-xl-6 col-lg-5 col-sm-4 */}
             <div data-about-circle className="flex-shrink-0 text-center">
               <Atropos
                 rotateTouch="scroll-y"
@@ -95,7 +88,7 @@ export default function AboutSection() {
                 activeOffset={40}
                 style={{ display: "inline-block", perspective: "500px" }}
               >
-                {/* "16" at depth -5 — shifts less than the circle on hover, creating depth */}
+                {/* "16" at depth -5: lags behind the circle on tilt = depth illusion */}
                 <div
                   data-atropos-offset="-5"
                   className="relative w-full"
@@ -103,45 +96,48 @@ export default function AboutSection() {
                 >
                   <span
                     className="absolute left-0 w-full text-center font-bold text-[#191919] leading-none select-none"
-                    style={{
-                      fontSize: "clamp(130px, 11.5vw, 180px)",
-                      letterSpacing: "-3px",
-                    }}
+                    style={{ fontSize: "clamp(130px, 11.5vw, 180px)", letterSpacing: "-3px" }}
                   >
                     16
                   </span>
                 </div>
-                {/* Yellow circle at default depth — floats in front of "16" on hover */}
+                {/* Yellow circle at default depth — appears in front on hover */}
                 <span className="w-[150px] h-[150px] md:w-[170px] md:h-[170px] xl:w-[210px] xl:h-[210px] rounded-full inline-block bg-[#efff02]" />
               </Atropos>
             </div>
 
-            {/* Established text */}
-            <div data-about-right-text>
-              <span className="text-white font-semibold text-[14px] uppercase tracking-[1px] block mb-[5px]">
+            {/* "Established for 16 years." text — col-xl-6 col-lg-7 col-sm-8 text-center text-sm-start */}
+            <div data-about-right-text className="text-center sm:text-left">
+              {/* fs-14 text-uppercase ls-1px text-white fw-600 d-block mb-5px */}
+              <span className="text-[14px] uppercase tracking-[1px] text-white font-semibold block mb-[5px]">
                 Established for 16 years.
               </span>
-              <p className="text-[#737373] text-sm leading-relaxed w-[90%]">
+              {/* w-90 lg-w-100 */}
+              <p className="text-[#737373] text-sm leading-relaxed w-[90%] lg:w-full">
                 We are dedicated to providing outstanding architectural and design services that meet the functional and aesthetic.
               </p>
             </div>
           </div>
         </div>
 
-        {/* Stats row */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
+        {/* Stats row — row-cols-1 row-cols-lg-3 */}
+        <div className="grid grid-cols-1 lg:grid-cols-3">
           {stats.map((s, i) => (
             <div
               key={s.label}
               data-stat
-              className="pr-12 md:pr-10"
+              className="pr-12 mb-[30px] lg:mb-0"
             >
-              {/* Top separator — hidden on first item mobile (matches reference d-none d-lg-block for first) */}
-              <div className={`h-px bg-[#2a2a2a] w-full mb-6 ${i === 0 ? "hidden md:block" : "block"}`} />
-              <div className="flex items-start justify-between gap-4 pb-2">
-                <span className="text-[#737373] text-[18px] leading-[30px] w-[80%]">
-                  <span className="text-white font-semibold">{s.num}</span> {s.desc}
+              {/* separator-line-1px bg-charcoal-grey mb-25px — first item d-none d-lg-block */}
+              <div className={`h-px bg-[#333333] w-full mb-[25px] ${i === 0 ? "hidden lg:block" : "block"}`} />
+              {/* feature-box feature-box-left-icon: content left, icon number right */}
+              <div className="flex items-start justify-between gap-4">
+                {/* text-medium-gray fs-18 lh-30 w-80 sm-w-90 d-block */}
+                <span className="text-[#737373] text-[18px] leading-[30px] w-[80%] sm:w-[90%] block">
+                  <span className="text-white font-semibold">{s.num}</span>{" "}
+                  {s.desc}
                 </span>
+                {/* fs-18 fw-500 text-base-color */}
                 <span className="text-[#efff02] font-medium text-[18px] flex-shrink-0">
                   {s.label}
                 </span>
