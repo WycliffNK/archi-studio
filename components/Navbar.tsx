@@ -85,26 +85,32 @@ export default function Navbar() {
             {/* Contact info — 3 columns matching reference */}
             <div className="grid grid-cols-3 gap-8 mt-10">
               <div>
-                <span className="text-[#efff02] text-[11px] tracking-[2px] uppercase font-semibold block mb-4">
+                {/* fs-14 fw-600 ls-2px text-uppercase mb-5px */}
+                <span className="text-[#efff02] text-[14px] tracking-[2px] uppercase font-semibold block mb-[5px]">
                   Let&apos;s Meet
                 </span>
-                <p className="text-[#737373] text-sm leading-relaxed">
+                {/* w-90 md-w-80 */}
+                <p className="text-[#737373] text-sm leading-relaxed w-[90%]">
                   27 Eden walk eden centre,<br />Orchard, Paris, France
                 </p>
               </div>
 
               <div>
-                <span className="text-[#efff02] text-[11px] tracking-[2px] uppercase font-semibold block mb-4">
+                <span className="text-[#efff02] text-[14px] tracking-[2px] uppercase font-semibold block mb-[5px]">
                   Let&apos;s Talk
                 </span>
-                <p className="text-[#737373] text-sm mb-1">1-800-222-002</p>
-                <a href="mailto:info@yourdomain.com" className="text-white text-sm hover:text-[#efff02] transition-colors underline underline-offset-2">
+                {/* text-white-hover: gray default, white on hover */}
+                <a href="tel:1800222002" className="text-[#737373] hover:text-white transition-colors text-sm block mb-1">
+                  1-800-222-002
+                </a>
+                {/* text-decoration-line-bottom text-white: white with bottom border */}
+                <a href="mailto:info@yourdomain.com" className="text-white text-sm border-b border-white hover:border-[#efff02] hover:text-[#efff02] transition-colors">
                   info@yourdomain.com
                 </a>
               </div>
 
               <div>
-                <span className="text-[#efff02] text-[11px] tracking-[2px] uppercase font-semibold block mb-4">
+                <span className="text-[#efff02] text-[14px] tracking-[2px] uppercase font-semibold block mb-[5px]">
                   Connect With Us
                 </span>
                 <div className="flex gap-4 mt-2">
@@ -150,14 +156,17 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Bottom bar */}
-        <div className="relative border-t border-white/[0.08] px-8 md:px-14 lg:px-20 py-4 hidden md:flex items-center gap-6">
-          <p className="text-white/40 text-sm font-light">
+        {/* Bottom bar — col-12 menu-text border-top d-none d-md-inline-block text-center */}
+        <div className="relative border-t border-white/[0.08] px-8 md:px-14 lg:px-20 py-3 hidden md:flex items-center justify-center gap-0">
+          {/* h6 fw-400 align-middle */}
+          <p className="text-white/60 text-sm font-normal inline-block align-middle mb-0">
             Let&apos;s build something{" "}
             <span className="text-white">great together</span>
           </p>
-          <div className="w-[70px] h-px bg-[#efff02] mx-5 flex-shrink-0" />
-          <a href="mailto:hello@crafto.com" className="text-[#efff02] font-medium" style={{ fontSize: "clamp(18px, 1.8vw, 26px)" }}>
+          {/* separator-line-1px w-70px bg-base-color ms-20px me-20px mt-5px */}
+          <div className="w-[70px] h-px bg-[#efff02] flex-shrink-0 mx-5 mt-[5px]" />
+          {/* fs-26 fw-500 text-base-color */}
+          <a href="mailto:hello@crafto.com" className="text-[#efff02] font-medium inline-block align-middle" style={{ fontSize: "26px" }}>
             hello@crafto.com
           </a>
         </div>
