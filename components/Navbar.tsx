@@ -131,20 +131,19 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* Right panel — Nav links */}
+          {/* Right panel — Nav links: menu-item-list alt-font ls-minus-05px */}
           <div className="flex flex-col justify-center px-8 md:px-10 lg:px-14 pt-24 md:pt-0">
-            <ul className="flex flex-col group/nav">
+            <ul className="flex flex-col list-none p-0 m-0 group/nav">
               {navLinks.map((item, i) => (
                 <li key={item}>
                   <Link
                     href="#"
-                    className={`font-light block leading-[1.05] transition-colors duration-300 group-hover/nav:text-white/25 hover:!text-white ${
-                      i === 0 ? "text-white/25" : "text-white"
+                    className={`font-light block leading-[1.05] transition-colors duration-300 group-hover/nav:text-white/30 hover:!text-white ${
+                      i === 0 ? "text-white" : "text-white/50"
                     }`}
                     style={{
                       fontSize: "clamp(40px, 5.5vw, 80px)",
                       letterSpacing: "-0.5px",
-                      transitionDelay: menuOpen ? `${i * 45}ms` : "0ms",
                     }}
                     onClick={() => setMenuOpen(false)}
                   >
