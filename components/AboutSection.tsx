@@ -1,78 +1,48 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const features = [
-  {
-    number: "01",
-    text: (
-      <>
-        <span className="text-white font-semibold">350+</span>{" "}
-        very satisfied clients around the worldwide.
-      </>
-    ),
-  },
-  {
-    number: "02",
-    text: (
-      <>
-        <span className="text-white font-semibold">200+</span>{" "}
-        good award winning architecture agency.
-      </>
-    ),
-  },
-  {
-    number: "03",
-    text: (
-      <>
-        <span className="text-white font-semibold">500+</span>{" "}
-        building has been constructed with us.
-      </>
-    ),
-  },
+const stats = [
+  { num: "350+", desc: "very satisfied clients around the worldwide.", label: "01" },
+  { num: "200+", desc: "good award winning architecture agency.", label: "02" },
+  { num: "500+", desc: "building has been constructed with us.", label: "03" },
 ];
 
 export default function AboutSection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const leftRef = useRef<HTMLDivElement>(null);
-  const rightRef = useRef<HTMLDivElement>(null);
-  const featuresRef = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from(leftRef.current, {
-        opacity: 0,
-        y: 40,
-        duration: 1,
-        ease: "power3.out",
+      // Left col — fade + slide up
+      gsap.from("[data-about-left]", {
+        opacity: 0, y: 40, duration: 1, ease: "power3.out",
         immediateRender: false,
-        scrollTrigger: { trigger: leftRef.current, start: "top 85%" },
+        scrollTrigger: { trigger: "[data-about-left]", start: "top 85%" },
       });
 
-      gsap.from(rightRef.current, {
-        opacity: 0,
-        x: 40,
-        duration: 1,
-        ease: "power3.out",
+      // Right circle + text
+      gsap.from("[data-about-circle]", {
+        opacity: 0, y: -15, scale: 0.8, duration: 1, ease: "power3.out",
         immediateRender: false,
-        scrollTrigger: { trigger: rightRef.current, start: "top 85%" },
+        scrollTrigger: { trigger: "[data-about-circle]", start: "top 85%" },
       });
 
-      featuresRef.current.forEach((el, i) => {
-        if (!el) return;
-        gsap.from(el, {
-          opacity: 0,
-          y: 30,
-          duration: 0.8,
-          delay: i * 0.15,
-          ease: "power3.out",
-          immediateRender: false,
-          scrollTrigger: { trigger: el, start: "top 88%" },
-        });
+      gsap.from("[data-about-right-text]", {
+        opacity: 0, duration: 0.8, ease: "power3.out",
+        immediateRender: false,
+        scrollTrigger: { trigger: "[data-about-right-text]", start: "top 85%" },
+      });
+
+      // Stat rows — staggered
+      gsap.from("[data-stat]", {
+        opacity: 0, y: 30, duration: 0.8, stagger: 0.15, ease: "power3.out",
+        immediateRender: false,
+        scrollTrigger: { trigger: "[data-stat]", start: "top 88%" },
       });
     }, sectionRef);
 
@@ -82,79 +52,90 @@ export default function AboutSection() {
   return (
     <section
       ref={sectionRef}
-      id="about"
-      className="bg-[#191919] py-20 md:py-28 overflow-hidden"
+      className="bg-[#191919] overflow-hidden py-20 md:py-28"
+      style={{
+        backgroundImage: "url('/dotted-pattern.svg')",
+        backgroundPosition: "center top",
+        backgroundRepeat: "repeat",
+      }}
     >
-      <div className="max-w-[1400px] mx-auto px-8 md:px-16">
+      <div className="max-w-[1320px] mx-auto px-8 md:px-16">
+
         {/* Top row */}
-        <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-center mb-16 md:mb-20">
+        <div className="grid lg:grid-cols-2 items-center gap-12 lg:gap-20 mb-14 md:mb-16">
 
-          {/* Left: signature + heading */}
-          <div ref={leftRef}>
-            <p
-              className="font-dancing text-[#efff02] mb-6 leading-none"
-              style={{ fontSize: "clamp(22px, 2.2vw, 32px)" }}
-            >
-              Herman miller
-            </p>
-
+          {/* Left: signature image + heading */}
+          <div data-about-left>
+            <Image
+              src="/signature.png"
+              alt="Signature"
+              width={136}
+              height={13}
+              className="mb-5"
+              unoptimized
+            />
             <h4
-              className="text-white font-extrabold leading-[1.05]"
-              style={{ fontSize: "clamp(36px, 4.2vw, 62px)", letterSpacing: "-2px" }}
+              className="text-white font-semibold leading-[1.15] mt-5 mb-0 w-[90%]"
+              style={{ fontSize: "clamp(22px, 2.5vw, 34px)" }}
             >
               Delivering awesome quality, effective and inspiring built gorgeous space.
             </h4>
           </div>
 
-          {/* Right: "16" circle + established text */}
-          <div ref={rightRef} className="flex items-center gap-8 md:gap-10">
+          {/* Right: circle + established text */}
+          <div className="flex items-center gap-8 md:gap-10">
 
-            {/* "16" over yellow circle */}
+            {/* Atropos-style circle with "16" */}
             <div
-              className="relative flex-shrink-0 text-center"
-              style={{ width: "280px", height: "280px" }}
+              data-about-circle
+              className="relative flex-shrink-0"
+              style={{ width: "210px", height: "260px" }}
             >
-              <div className="absolute bottom-0 left-0 w-full h-full rounded-full bg-[#efff02]" />
+              {/* "16" sits above the circle */}
               <span
-                className="absolute left-0 w-full text-center font-extrabold text-[#191919] leading-none z-10 select-none"
-                style={{
-                  fontSize: "clamp(150px, 16vw, 215px)",
-                  letterSpacing: "-8px",
-                  top: "-18px",
-                }}
+                className="absolute left-0 w-full text-center font-bold text-[#191919] leading-none select-none z-10"
+                style={{ fontSize: "180px", letterSpacing: "-3px", top: "0px" }}
               >
                 16
               </span>
+              {/* Yellow circle behind/below the number */}
+              <span className="absolute bottom-0 left-0 w-[210px] h-[210px] rounded-full bg-[#efff02] block" />
             </div>
 
-            <div>
-              <span className="text-white font-extrabold text-xs tracking-[2.5px] uppercase block mb-3">
+            {/* Established text */}
+            <div data-about-right-text>
+              <span className="text-white font-semibold text-[14px] uppercase tracking-[1px] block mb-[5px]">
                 Established for 16 years.
               </span>
-              <p className="text-[#737373] text-sm leading-relaxed max-w-[220px]">
+              <p className="text-[#737373] text-sm leading-relaxed w-[90%]">
                 We are dedicated to providing outstanding architectural and design services that meet the functional and aesthetic.
               </p>
             </div>
           </div>
         </div>
 
-        {/* Features row */}
-        <div className="grid md:grid-cols-3 gap-8 md:gap-10">
-          {features.map((f, i) => (
+        {/* Stats row */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
+          {stats.map((s, i) => (
             <div
-              key={f.number}
-              ref={(el) => { featuresRef.current[i] = el; }}
-              className="border-t border-[#3E3E3E] flex items-start justify-between gap-4 pt-5 pb-2"
+              key={s.label}
+              data-stat
+              className="pr-12 md:pr-10"
             >
-              <p className="text-[#737373] text-sm leading-relaxed flex-1">
-                {f.text}
-              </p>
-              <span className="text-[#efff02] font-semibold text-base flex-shrink-0">
-                {f.number}
-              </span>
+              {/* Top separator — hidden on first item mobile (matches reference d-none d-lg-block for first) */}
+              <div className={`h-px bg-[#2a2a2a] w-full mb-6 ${i === 0 ? "hidden md:block" : "block"}`} />
+              <div className="flex items-start justify-between gap-4 pb-2">
+                <span className="text-[#737373] text-[18px] leading-[30px] w-[80%]">
+                  <span className="text-white font-semibold">{s.num}</span> {s.desc}
+                </span>
+                <span className="text-[#efff02] font-medium text-[18px] flex-shrink-0">
+                  {s.label}
+                </span>
+              </div>
             </div>
           ))}
         </div>
+
       </div>
     </section>
   );
