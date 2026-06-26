@@ -2,6 +2,8 @@
 
 import { useEffect, useRef } from "react";
 import Image from "next/image";
+import Atropos from "atropos/react";
+import "atropos/css";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -85,21 +87,33 @@ export default function AboutSection() {
           {/* Right: circle + established text */}
           <div className="flex items-center gap-8 md:gap-10">
 
-            {/* Atropos-style circle with "16" */}
-            <div
-              data-about-circle
-              className="relative flex-shrink-0"
-              style={{ width: "210px", height: "260px" }}
-            >
-              {/* "16" sits above the circle */}
-              <span
-                className="absolute left-0 w-full text-center font-bold text-[#191919] leading-none select-none z-10"
-                style={{ fontSize: "180px", letterSpacing: "-3px", top: "0px" }}
+            {/* Atropos 3D circle with "16" */}
+            <div data-about-circle className="flex-shrink-0 text-center">
+              <Atropos
+                rotateTouch="scroll-y"
+                shadow
+                activeOffset={40}
+                style={{ display: "inline-block", perspective: "500px" }}
               >
-                16
-              </span>
-              {/* Yellow circle behind/below the number */}
-              <span className="absolute bottom-0 left-0 w-[210px] h-[210px] rounded-full bg-[#efff02] block" />
+                {/* "16" at depth -5 — shifts less than the circle on hover, creating depth */}
+                <div
+                  data-atropos-offset="-5"
+                  className="relative w-full"
+                  style={{ top: "50px" }}
+                >
+                  <span
+                    className="absolute left-0 w-full text-center font-bold text-[#191919] leading-none select-none"
+                    style={{
+                      fontSize: "clamp(130px, 11.5vw, 180px)",
+                      letterSpacing: "-3px",
+                    }}
+                  >
+                    16
+                  </span>
+                </div>
+                {/* Yellow circle at default depth — floats in front of "16" on hover */}
+                <span className="w-[150px] h-[150px] md:w-[170px] md:h-[170px] xl:w-[210px] xl:h-[210px] rounded-full inline-block bg-[#efff02]" />
+              </Atropos>
             </div>
 
             {/* Established text */}
