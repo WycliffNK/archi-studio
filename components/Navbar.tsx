@@ -53,9 +53,9 @@ export default function Navbar() {
         </div>
       </header>
 
-      {/* Full-screen overlay menu */}
+      {/* Full-screen overlay menu — z-[60] so it sits above the absolute header (z-50) */}
       <div
-        className={`fixed inset-0 z-40 bg-[#191919] flex flex-col transition-all duration-500 ${
+        className={`fixed inset-0 z-[60] bg-[#191919] flex flex-col transition-all duration-500 ${
           menuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
         style={{ backgroundImage: "url('/vertical-lines.svg')", backgroundRepeat: "repeat", backgroundPosition: "center top" }}
