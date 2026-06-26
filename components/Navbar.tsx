@@ -156,7 +156,7 @@ export default function Navbar() {
         </div>
 
         {/* Bottom bar — col-12 menu-text border-top d-none d-md-inline-block text-center */}
-        <div className="relative border-t border-white/[0.08] px-8 md:px-14 lg:px-20 py-3 hidden md:flex items-center justify-center gap-0">
+        <div className="relative border-t border-white/[0.15] px-8 md:px-14 lg:px-20 py-4 hidden md:flex items-center justify-center gap-0">
           {/* h6 fw-400 align-middle */}
           <p className="text-white/60 text-sm font-normal inline-block align-middle mb-0">
             Let&apos;s build something{" "}
