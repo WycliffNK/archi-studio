@@ -131,8 +131,8 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* Right panel — Nav links: menu-item-list alt-font ls-minus-05px */}
-          <div className="flex flex-col justify-center px-8 md:px-10 lg:px-14 pt-24 md:pt-0">
+          {/* Right panel — Nav links with mCS-light style scrollbar for overflow */}
+          <div className="flex flex-col justify-center px-8 md:px-10 lg:px-14 pt-24 md:pt-0 overflow-y-auto [&::-webkit-scrollbar]:w-[4px] [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-white/30 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:min-h-[30px] hover:[&::-webkit-scrollbar-thumb]:bg-white/50">
             <ul className="flex flex-col list-none p-0 m-0 group/nav">
               {navLinks.map((item, i) => (
                 <li key={item}>
