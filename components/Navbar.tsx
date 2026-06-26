@@ -100,9 +100,9 @@ export default function Navbar() {
                   Let&apos;s Talk
                 </span>
                 {/* text-white-hover: gray default, white on hover */}
-                <a href="tel:1800222002" className="text-[#737373] hover:text-white transition-colors text-sm block mb-1">
+                <a href="tel:1800222002" className="text-[#737373] hover:text-white transition-colors text-sm">
                   1-800-222-002
-                </a>
+                </a><br />
                 {/* text-decoration-line-bottom text-white: white with bottom border */}
                 <a href="mailto:info@yourdomain.com" className="text-white text-sm border-b border-white hover:border-[#efff02] hover:text-[#efff02] transition-colors">
                   info@yourdomain.com
@@ -113,7 +113,7 @@ export default function Navbar() {
                 <span className="text-[#efff02] text-[14px] tracking-[2px] uppercase font-semibold block mb-[5px]">
                   Connect With Us
                 </span>
-                <div className="flex gap-4 mt-2">
+                <div className="flex gap-4 mt-[15px]">
                   <a href="#" className="text-white/40 hover:text-white transition-colors">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" /></svg>
                   </a>
