@@ -40,6 +40,20 @@ export default function VideoSection() {
           },
         }
       );
+
+      // Right panel: play button scales in with elastic bounce
+      gsap.from("[data-video-play]", {
+        scale: 0.4, opacity: 0, duration: 0.9, ease: "back.out(1.7)",
+        immediateRender: false,
+        scrollTrigger: { trigger: sectionRef.current, start: "top 72%" },
+      });
+
+      // Right panel: heading slides up from below
+      gsap.from("[data-video-heading]", {
+        y: 40, opacity: 0, duration: 1.1, ease: "power3.out", delay: 0.2,
+        immediateRender: false,
+        scrollTrigger: { trigger: sectionRef.current, start: "top 72%" },
+      });
     }, sectionRef);
 
     return () => ctx.revert();
@@ -71,11 +85,12 @@ export default function VideoSection() {
           }}
         />
 
-        {/* Right: nero-grey panel — col-lg-4 col-md-6 */}
-        <div className="relative w-full md:w-1/2 lg:w-1/3 flex-shrink-0 bg-[#1a1a1a] h-auto sm:h-[350px] md:h-full flex flex-col items-center justify-center py-16 md:py-0 overflow-hidden">
+        {/* Right: nero-grey panel — col-lg-4 col-md-6 — data-cursor-play: expands ring with ▶ */}
+        <div data-cursor-play className="relative w-full md:w-1/2 lg:w-1/3 flex-shrink-0 bg-[#1a1a1a] h-auto sm:h-[350px] md:h-full flex flex-col items-center justify-center py-16 md:py-0 overflow-hidden">
 
           {/* Play button — border border-2 border-color-base-color rounded-circle video-icon-large */}
           <a
+            data-video-play
             href="https://www.youtube.com/watch?v=cfXHhfNy7tU"
             target="_blank"
             rel="noopener noreferrer"
@@ -89,6 +104,7 @@ export default function VideoSection() {
 
           {/* h2 — fs-60 fw-500 text-center w-50 xl-w-80 ls-minus-2px */}
           <h2
+            data-video-heading
             className="text-white font-medium text-center leading-tight z-10 w-1/2 xl:w-4/5"
             style={{ fontSize: "60px", letterSpacing: "-2px" }}
           >

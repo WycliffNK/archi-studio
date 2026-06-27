@@ -120,7 +120,7 @@ export default function HeroSection() {
 
     timerRef.current = setInterval(() => {
       goTo((currentRef.current + 1) % slides.length);
-    }, 6000);
+    }, 9000);
 
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
@@ -132,7 +132,7 @@ export default function HeroSection() {
     goTo(i);
     timerRef.current = setInterval(() => {
       goTo((currentRef.current + 1) % slides.length);
-    }, 6000);
+    }, 9000);
   };
 
   const nextSlide = () => goToSlide((currentRef.current + 1) % slides.length);

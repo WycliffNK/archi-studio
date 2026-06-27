@@ -21,12 +21,12 @@ export default function AboutSection() {
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.from("[data-about-left]", {
-        opacity: 0, y: 40, duration: 1, ease: "power3.out",
+        opacity: 0, y: 30, x: -40, duration: 1.2, ease: "power3.out",
         immediateRender: false,
         scrollTrigger: { trigger: "[data-about-left]", start: "top 85%" },
       });
       gsap.from("[data-about-circle]", {
-        opacity: 0, y: -15, scale: 0.8, duration: 1, ease: "power3.out",
+        opacity: 0, scale: 0.5, rotate: -20, duration: 1.1, ease: "back.out(1.4)",
         immediateRender: false,
         scrollTrigger: { trigger: "[data-about-circle]", start: "top 85%" },
       });

@@ -2,8 +2,12 @@
 
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function MarqueeText() {
+  const wrapRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -11,6 +15,15 @@ export default function MarqueeText() {
     if (!track) return;
 
     const totalWidth = track.scrollWidth / 2;
+
+    // Entrance: section fades + rises into view
+    const ctx = gsap.context(() => {
+      gsap.from(wrapRef.current, {
+        opacity: 0, y: 30, duration: 0.9, ease: "power3.out",
+        immediateRender: false,
+        scrollTrigger: { trigger: wrapRef.current, start: "top 92%" },
+      });
+    });
 
     const tween = gsap.to(track, {
       x: -totalWidth,
@@ -22,14 +35,14 @@ export default function MarqueeText() {
       },
     });
 
-    return () => { tween.kill(); };
+    return () => { tween.kill(); ctx.revert(); };
   }, []);
 
   const words = "we love  architecture  and  interior design".split("  ");
   const items = [...Array(6)].flatMap(() => words);
 
   return (
-    <div className="bg-[#191919] overflow-hidden py-10 border-y border-[#3E3E3E]">
+    <div ref={wrapRef} className="bg-[#191919] overflow-hidden py-10 border-y border-[#3E3E3E]">
       <div ref={trackRef} className="flex whitespace-nowrap">
         {items.map((word, i) => (
           <span

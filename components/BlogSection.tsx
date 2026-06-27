@@ -11,17 +11,17 @@ const articles = [
   {
     category: "Architect",
     title: "Everything designed things are designed.",
-    image: "https://images.unsplash.com/photo-1600585152220-90363fe7e115?w=800&q=80",
+    image: "/blog-01.jpg",
   },
   {
     category: "Interior",
     title: "Teamwork is essential for small teams challenges.",
-    image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80",
+    image: "/blog-02.jpg",
   },
   {
     category: "Landscape",
     title: "Some people just try to celebrate joys of life.",
-    image: "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=800&q=80",
+    image: "/blog-03.jpg",
   },
 ];
 
@@ -29,6 +29,7 @@ export default function BlogSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const headlineRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<(HTMLElement | null)[]>([]);
+  const archRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -53,6 +54,20 @@ export default function BlogSection() {
           scrollTrigger: { trigger: card, start: "top 88%" },
         });
       });
+
+      // Ghost "architecture" text: parallax scrub — drifts up as section scrolls
+      gsap.fromTo(archRef.current,
+        { y: 60 },
+        {
+          y: -40, ease: "none",
+          scrollTrigger: {
+            trigger: archRef.current,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 0.8,
+          },
+        }
+      );
     }, sectionRef);
 
     return () => ctx.revert();
@@ -100,7 +115,7 @@ export default function BlogSection() {
               {/* Content overlay */}
               <div className="absolute inset-0 flex flex-col justify-between p-10 md:p-12">
                 <div>
-                  <span className="bg-white text-[#191919] text-xs font-bold uppercase tracking-[1px] px-3 py-1.5 inline-block">
+                  <span className="bg-white text-[#191919] text-xs font-bold uppercase tracking-[1px] px-4 py-1.5 rounded-full inline-block">
                     {article.category}
                   </span>
                 </div>
@@ -117,8 +132,9 @@ export default function BlogSection() {
         </div>
       </div>
 
-      {/* "architecture" outline text at bottom */}
+      {/* "architecture" outline text at bottom — parallax scrub via archRef */}
       <div
+        ref={archRef}
         className="text-center font-bold select-none pointer-events-none leading-none overflow-hidden"
         style={{
           fontSize: "clamp(80px, 13vw, 200px)",

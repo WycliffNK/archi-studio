@@ -140,16 +140,16 @@ export default function ServicesSection() {
             loop={true}
             autoplay={{ delay: 4000, disableOnInteraction: false }}
             breakpoints={{
-              768: { slidesPerView: 3 },
+              768: { slidesPerView: 2 },
               992: { slidesPerView: 3 },
-              1200: { slidesPerView: 4 },
+              1200: { slidesPerView: 3 },
             }}
             style={{ overflow: "visible" }}
           >
             {services.map((service) => (
               <SwiperSlide key={service.title}>
-                {/* interactive-banner-style-06 */}
-                <div className="relative overflow-hidden group" style={{ height: "450px" }}>
+                {/* interactive-banner-style-06 — data-cursor-drag: shows ← → drag cursor */}
+                <div data-cursor-drag className="relative overflow-hidden group" style={{ height: "450px" }}>
 
                   {/* interactive-banners-image */}
                   <div className="absolute inset-0">
