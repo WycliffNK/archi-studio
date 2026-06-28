@@ -171,8 +171,8 @@ export default function ProjectsSection() {
               </span>
             </div>
 
-            {/* Slider */}
-            <div className="relative overflow-hidden" style={{ height: "clamp(400px, 55vh, 650px)" }}>
+            {/* Slider — data-cursor-slider: 70px dark circle with ← → matching Crafto .magic-cursor (no drag) */}
+            <div data-cursor-slider className="relative overflow-hidden" style={{ height: "clamp(400px, 55vh, 650px)" }}>
               {projects.map((project, i) => (
                 <div
                   key={project.title}
@@ -271,8 +271,9 @@ export default function ProjectsSection() {
         </div>
 
         {/* Testimonials — testimonials-style-10: col-xl-9 col-lg-10 centered */}
+        {/* data-cursor-drag: matches Crafto .text-slider-style-04.magic-cursor.drag-cursor */}
         <div className="flex justify-center pb-16 md:pb-20">
-          <div className="relative w-full lg:w-10/12 xl:w-9/12 pt-9 pb-6 px-4 md:px-16">
+          <div data-cursor-drag className="relative w-full lg:w-10/12 xl:w-9/12 pt-9 pb-6 px-4 md:px-16">
 
             {/* Left arrow nav */}
             <button
