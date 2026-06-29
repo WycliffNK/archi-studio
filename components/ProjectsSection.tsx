@@ -171,8 +171,8 @@ export default function ProjectsSection() {
               </span>
             </div>
 
-            {/* Slider — data-cursor-slider: 70px dark circle with ← → matching Crafto .magic-cursor (no drag) */}
-            <div data-cursor-slider className="relative overflow-hidden" style={{ height: "clamp(400px, 55vh, 650px)" }}>
+            {/* Slider — data-cursor-drag: matches Crafto .text-slider-style-04.magic-cursor.drag-cursor → 140px "< DRAG >" */}
+            <div data-cursor-drag className="relative overflow-hidden" style={{ height: "clamp(400px, 55vh, 650px)" }}>
               {projects.map((project, i) => (
                 <div
                   key={project.title}
@@ -191,8 +191,7 @@ export default function ProjectsSection() {
 
                   {/* White info card — bottom right: col-lg-5 col-md-7 */}
                   <div className="absolute bottom-0 right-0 z-10 w-full md:w-7/12 lg:w-5/12">
-                    {/* data-cursor-dark: ring switches to dark so it's visible on white bg */}
-                    <div data-cursor-dark className="bg-white p-10 lg:p-12">
+                    <div className="bg-white p-10 lg:p-12">
                       <span className="text-[#191919] text-[15px] font-bold tracking-[1px] uppercase block mb-3">
                         {project.category}
                       </span>
@@ -271,9 +270,9 @@ export default function ProjectsSection() {
         </div>
 
         {/* Testimonials — testimonials-style-10: col-xl-9 col-lg-10 centered */}
-        {/* data-cursor-drag: matches Crafto .text-slider-style-04.magic-cursor.drag-cursor */}
+        {/* data-cursor-slider: matches Crafto .magic-cursor.pt-9.pb-6 (no drag class) → 70px dark circle ← → */}
         <div className="flex justify-center pb-16 md:pb-20">
-          <div data-cursor-drag className="relative w-full lg:w-10/12 xl:w-9/12 pt-9 pb-6 px-4 md:px-16">
+          <div data-cursor-slider className="relative w-full lg:w-10/12 xl:w-9/12 pt-9 pb-6 px-4 md:px-16">
 
             {/* Left arrow nav */}
             <button

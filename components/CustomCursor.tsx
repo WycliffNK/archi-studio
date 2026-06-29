@@ -4,148 +4,104 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 
 export default function CustomCursor() {
-  const ringRef = useRef<HTMLDivElement>(null);
-  const innerRef = useRef<HTMLSpanElement>(null);
+  const dotRef   = useRef<HTMLDivElement>(null);
+  const outerRef = useRef<HTMLDivElement>(null);
+  const ballRef  = useRef<HTMLDivElement>(null);
+  const ballInnerRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
-    const ring = ringRef.current;
-    const inner = innerRef.current;
-    if (!ring || !inner) return;
+    const dot   = dotRef.current;
+    const outer = outerRef.current;
+    const ball  = ballRef.current;
+    const bi    = ballInnerRef.current;
+    if (!dot || !outer || !ball || !bi) return;
 
     let raf = 0;
-    let tx = -100, ty = -100;
-    let zoneMode: "default" | "drag" | "slider" | "play" | "dark" = "default";
+    let zoneMode: "default" | "drag" | "slider" | "play" = "default";
 
-    // ─── style helpers ─────────────────────────────────────────────────────
-    const applyDefault = () => {
-      gsap.to(ring, {
-        width: 34, height: 34, scale: 1,
-        borderWidth: 2,
-        borderColor: "rgba(255,255,255,0.8)",
-        backgroundColor: "transparent",
-        backdropFilter: "blur(0px)",
-        duration: 0.35, ease: "power2.out", overwrite: "auto",
-      });
-      gsap.to(inner, { opacity: 0, fontSize: "10px", duration: 0.2, overwrite: "auto" });
+    // Center all elements at cursor; start off-screen and invisible
+    gsap.set([dot, outer, ball], { xPercent: -50, yPercent: -50, x: -200, y: -200 });
+    gsap.set(dot,  { width: 6,  height: 6,  opacity: 0, scale: 1 });
+    gsap.set(outer,{ width: 30, height: 30, opacity: 0, scale: 1 });
+    gsap.set(ball, { width: 34, height: 34, opacity: 0, scale: 0, borderWidth: 0 });
+    gsap.set(bi,   { opacity: 0 });
+
+    // ─── custom cursor (yellow dot + ring) ─────────────────────────
+    const showCustom = (linkHover = false) => {
+      gsap.to(dot,  { width: linkHover ? 20 : 6, height: linkHover ? 20 : 6, opacity: 1, scale: 1, duration: 0.25, ease: "power2.out", overwrite: "auto" });
+      gsap.to(outer,{ opacity: 0.8, scale: 1, duration: 0.3, ease: "power2.out", overwrite: "auto" });
     };
 
-    // drag-cursor: matches Crafto .magic-drag-cursor — 140px filled blurred dark circle + "< DRAG >"
-    const applyDrag = () => {
-      gsap.to(ring, {
-        width: 140, height: 140, scale: 1,
-        borderWidth: 0,
-        borderColor: "transparent",
-        backgroundColor: "rgba(0,0,0,0.55)",
-        backdropFilter: "blur(10px)",
-        duration: 0.4, ease: "power2.out", overwrite: "auto",
-      });
-      inner.textContent = "< DRAG >";
-      gsap.to(inner, {
-        opacity: 1, fontSize: "11px",
-        duration: 0.25, overwrite: "auto",
-      });
+    const hideCustom = () => {
+      gsap.to(dot,  { opacity: 0, scale: 0, duration: 0.2, overwrite: "auto" });
+      gsap.to(outer,{ opacity: 0, scale: 0, duration: 0.2, overwrite: "auto" });
     };
 
-    // slider cursor: matches Crafto regular .magic-cursor (no drag) — 70px dark circle + arrows
-    const applySlider = () => {
-      gsap.to(ring, {
-        width: 70, height: 70, scale: 1,
-        borderWidth: 0,
-        borderColor: "transparent",
-        backgroundColor: "rgba(0,0,0,0.7)",
-        backdropFilter: "blur(6px)",
-        duration: 0.35, ease: "power2.out", overwrite: "auto",
-      });
-      inner.textContent = "←  →";
-      gsap.to(inner, {
-        opacity: 1, fontSize: "12px",
-        duration: 0.2, overwrite: "auto",
-      });
+    // ─── ball cursor states ────────────────────────────────────────
+    const showBall = (w: number, h: number, bw: number, bc: string, bg: string, blur: string, text: string) => {
+      hideCustom();
+      gsap.to(ball, { width: w, height: h, opacity: 1, scale: 1, borderWidth: bw, borderColor: bc, backgroundColor: bg, backdropFilter: blur, duration: 0.4, ease: "power2.out", overwrite: "auto" });
+      bi.textContent = text;
+      gsap.to(bi, { opacity: text ? 1 : 0, duration: 0.25, overwrite: "auto" });
     };
 
-    // play cursor: yellow ring with ▶ for video panel
-    const applyPlay = () => {
-      gsap.to(ring, {
-        width: 80, height: 80, scale: 1,
-        borderWidth: 2,
-        borderColor: "#efff02",
-        backgroundColor: "rgba(239,255,2,0.08)",
-        backdropFilter: "blur(0px)",
-        duration: 0.4, ease: "power2.out", overwrite: "auto",
-      });
-      inner.textContent = "▶";
-      gsap.to(inner, { opacity: 1, fontSize: "14px", duration: 0.25, overwrite: "auto" });
+    const hideBall = () => {
+      gsap.to(ball, { opacity: 0, scale: 0, duration: 0.35, ease: "power2.in", overwrite: "auto" });
+      gsap.to(bi,   { opacity: 0, duration: 0.15, overwrite: "auto" });
     };
 
-    // dark cursor: for white/light bg areas (projects white card)
-    const applyDark = () => {
-      gsap.to(ring, {
-        width: 34, height: 34, scale: 1,
-        borderWidth: 2,
-        borderColor: "rgba(25,25,25,0.55)",
-        backgroundColor: "transparent",
-        backdropFilter: "blur(0px)",
-        duration: 0.35, ease: "power2.out", overwrite: "auto",
-      });
-      gsap.to(inner, { opacity: 0, duration: 0.2, overwrite: "auto" });
-    };
+    // ─── zone state appliers ──────────────────────────────────────
+    const applyDefault = () => { hideBall(); showCustom(false); };
+    const applyDrag    = () => showBall(140, 140, 0, "transparent", "rgba(0,0,0,0.55)", "blur(10px)", "< DRAG >");
+    const applySlider  = () => showBall(70,  70,  0, "transparent", "rgba(0,0,0,0.7)",  "blur(6px)",  "←  →");
+    const applyPlay    = () => showBall(80,  80,  2, "#efff02",      "rgba(239,255,2,0.08)", "blur(0px)", "▶");
 
-    // link hover: yellow scaled ring (better UX than Crafto's hide)
-    const applyLink = (isDark: boolean) => {
-      gsap.to(ring, {
-        width: 34, height: 34, scale: 1.6,
-        borderWidth: 2,
-        borderColor: isDark ? "#191919" : "#efff02",
-        backgroundColor: "transparent",
-        backdropFilter: "blur(0px)",
-        duration: 0.3, ease: "power2.out", overwrite: "auto",
-      });
-      gsap.to(inner, { opacity: 0, duration: 0.15, overwrite: "auto" });
-    };
+    const applyLink    = () => { if (zoneMode === "default") showCustom(true); };
+    const restoreLink  = () => { if (zoneMode === "default") showCustom(false); };
 
-    const restoreZone = () => {
-      if (zoneMode === "drag") applyDrag();
+    const restoreZone  = () => {
+      if      (zoneMode === "drag")   applyDrag();
       else if (zoneMode === "slider") applySlider();
-      else if (zoneMode === "play") applyPlay();
-      else if (zoneMode === "dark") applyDark();
+      else if (zoneMode === "play")   applyPlay();
       else applyDefault();
     };
 
-    // ─── mouse move ────────────────────────────────────────────────────────
+    // ─── mouse move ───────────────────────────────────────────────
+    let tx = -200, ty = -200, firstMove = true;
     const onMove = (e: MouseEvent) => {
-      tx = e.clientX;
-      ty = e.clientY;
+      tx = e.clientX; ty = e.clientY;
       cancelAnimationFrame(raf);
       raf = requestAnimationFrame(() => {
-        gsap.to(ring, {
-          x: tx, y: ty,
-          duration: 0.55, ease: "power2.out", overwrite: "auto",
-        });
+        if (firstMove) {
+          // Snap to position on first move so cursor doesn't slide in from off-screen
+          gsap.set([dot, outer, ball], { x: tx, y: ty });
+          applyDefault();
+          firstMove = false;
+        }
+        gsap.to(dot,  { x: tx, y: ty, duration: 0.1,  ease: "power2.out", overwrite: "auto" });
+        gsap.to(outer,{ x: tx, y: ty, duration: 0.45, ease: "power2.out", overwrite: "auto" });
+        gsap.to(ball, { x: tx, y: ty, duration: 0.55, ease: "power2.out", overwrite: "auto" });
       });
     };
 
-    // ─── zone handlers ─────────────────────────────────────────────────────
+    // ─── zone handlers ────────────────────────────────────────────
     const onEnterDrag   = () => { zoneMode = "drag";   applyDrag(); };
     const onLeaveDrag   = () => { zoneMode = "default"; applyDefault(); };
     const onEnterSlider = () => { zoneMode = "slider"; applySlider(); };
     const onLeaveSlider = () => { zoneMode = "default"; applyDefault(); };
     const onEnterPlay   = () => { zoneMode = "play";   applyPlay(); };
     const onLeavePlay   = () => { zoneMode = "default"; applyDefault(); };
-    const onEnterDark   = () => { zoneMode = "dark";   applyDark(); };
-    const onLeaveDark   = () => { zoneMode = "default"; applyDefault(); };
-    const onEnterLink   = () => applyLink(zoneMode === "dark");
-    const onLeaveLink   = () => restoreZone();
+    const onEnterLink   = () => applyLink();
+    const onLeaveLink   = () => restoreLink();
 
-    // ─── listener management ───────────────────────────────────────────────
-    let links: Element[] = [], drags: Element[] = [], sliders: Element[] = [],
-        plays: Element[] = [], darks: Element[] = [];
+    // ─── listener management ──────────────────────────────────────
+    let links: Element[] = [], drags: Element[] = [], sliders: Element[] = [], plays: Element[] = [];
 
     const detach = () => {
-      links.forEach(el   => { el.removeEventListener("mouseenter", onEnterLink);   el.removeEventListener("mouseleave", onLeaveLink); });
-      drags.forEach(el   => { el.removeEventListener("mouseenter", onEnterDrag);   el.removeEventListener("mouseleave", onLeaveDrag); });
+      links.forEach  (el => { el.removeEventListener("mouseenter", onEnterLink);   el.removeEventListener("mouseleave", onLeaveLink); });
+      drags.forEach  (el => { el.removeEventListener("mouseenter", onEnterDrag);   el.removeEventListener("mouseleave", onLeaveDrag); });
       sliders.forEach(el => { el.removeEventListener("mouseenter", onEnterSlider); el.removeEventListener("mouseleave", onLeaveSlider); });
-      plays.forEach(el   => { el.removeEventListener("mouseenter", onEnterPlay);   el.removeEventListener("mouseleave", onLeavePlay); });
-      darks.forEach(el   => { el.removeEventListener("mouseenter", onEnterDark);   el.removeEventListener("mouseleave", onLeaveDark); });
+      plays.forEach  (el => { el.removeEventListener("mouseenter", onEnterPlay);   el.removeEventListener("mouseleave", onLeavePlay); });
     };
 
     const attach = () => {
@@ -154,13 +110,11 @@ export default function CustomCursor() {
       drags   = [...document.querySelectorAll("[data-cursor-drag]")];
       sliders = [...document.querySelectorAll("[data-cursor-slider]")];
       plays   = [...document.querySelectorAll("[data-cursor-play]")];
-      darks   = [...document.querySelectorAll("[data-cursor-dark]")];
 
-      links.forEach(el   => { el.addEventListener("mouseenter", onEnterLink);   el.addEventListener("mouseleave", onLeaveLink); });
-      drags.forEach(el   => { el.addEventListener("mouseenter", onEnterDrag);   el.addEventListener("mouseleave", onLeaveDrag); });
+      links.forEach  (el => { el.addEventListener("mouseenter", onEnterLink);   el.addEventListener("mouseleave", onLeaveLink); });
+      drags.forEach  (el => { el.addEventListener("mouseenter", onEnterDrag);   el.addEventListener("mouseleave", onLeaveDrag); });
       sliders.forEach(el => { el.addEventListener("mouseenter", onEnterSlider); el.addEventListener("mouseleave", onLeaveSlider); });
-      plays.forEach(el   => { el.addEventListener("mouseenter", onEnterPlay);   el.addEventListener("mouseleave", onLeavePlay); });
-      darks.forEach(el   => { el.addEventListener("mouseenter", onEnterDark);   el.addEventListener("mouseleave", onLeaveDark); });
+      plays.forEach  (el => { el.addEventListener("mouseenter", onEnterPlay);   el.addEventListener("mouseleave", onLeavePlay); });
     };
 
     document.addEventListener("mousemove", onMove);
@@ -178,25 +132,32 @@ export default function CustomCursor() {
   }, []);
 
   return (
-    <div
-      ref={ringRef}
-      id="ball-cursor"
-      className="fixed top-0 left-0 pointer-events-none z-[9999] rounded-full flex items-center justify-center"
-      style={{
-        width: "34px",
-        height: "34px",
-        border: "2px solid rgba(255,255,255,0.8)",
-        background: "transparent",
-        translate: "none",
-        transform: "translate(-50%, -50%) translate3d(-100px, -100px, 0)",
-        willChange: "transform",
-      }}
-    >
-      <span
-        ref={innerRef}
-        className="text-white font-bold select-none tracking-widest leading-none text-center"
-        style={{ opacity: 0, fontSize: "10px", letterSpacing: "2px", wordSpacing: "3px" }}
+    <>
+      {/* circle-cursor-inner: yellow dot, follows cursor immediately */}
+      <div
+        ref={dotRef}
+        className="fixed top-0 left-0 pointer-events-none z-[9999] rounded-full"
+        style={{ width: "6px", height: "6px", backgroundColor: "#efff02", opacity: 0, willChange: "transform" }}
       />
-    </div>
+      {/* circle-cursor-outer: yellow ring, lags slightly */}
+      <div
+        ref={outerRef}
+        className="fixed top-0 left-0 pointer-events-none z-[9998] rounded-full"
+        style={{ width: "30px", height: "30px", border: "1px solid #efff02", backgroundColor: "transparent", opacity: 0, willChange: "transform" }}
+      />
+      {/* ball cursor: hidden until zone entry */}
+      <div
+        ref={ballRef}
+        id="ball-cursor"
+        className="fixed top-0 left-0 pointer-events-none z-[9997] rounded-full flex items-center justify-center"
+        style={{ width: "34px", height: "34px", backgroundColor: "transparent", opacity: 0, willChange: "transform" }}
+      >
+        <span
+          ref={ballInnerRef}
+          className="text-white font-bold select-none tracking-widest leading-none text-center"
+          style={{ fontSize: "11px", letterSpacing: "2px", wordSpacing: "3px" }}
+        />
+      </div>
+    </>
   );
 }
