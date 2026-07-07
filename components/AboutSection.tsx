@@ -20,23 +20,26 @@ export default function AboutSection() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      // Reference: opacity only, easeOutQuad (power2.out), 600ms
       gsap.from("[data-about-left]", {
-        opacity: 0, y: 30, x: -40, duration: 1.2, ease: "power3.out",
+        opacity: 0, duration: 0.6, ease: "power2.out",
         immediateRender: false,
         scrollTrigger: { trigger: "[data-about-left]", start: "top 85%" },
       });
+      // Reference: translateY -15→0 (slides down from above), scale 0.8→1, opacity
       gsap.from("[data-about-circle]", {
-        opacity: 0, scale: 0.5, rotate: -20, duration: 1.1, ease: "back.out(1.4)",
+        opacity: 0, y: -15, scale: 0.8, duration: 0.6, ease: "power2.out",
         immediateRender: false,
         scrollTrigger: { trigger: "[data-about-circle]", start: "top 85%" },
       });
       gsap.from("[data-about-right-text]", {
-        opacity: 0, duration: 0.8, ease: "power3.out",
+        opacity: 0, duration: 0.6, ease: "power2.out",
         immediateRender: false,
         scrollTrigger: { trigger: "[data-about-right-text]", start: "top 85%" },
       });
+      // Reference: opacity only, stagger 300ms each child
       gsap.from("[data-stat]", {
-        opacity: 0, y: 30, duration: 0.8, stagger: 0.15, ease: "power3.out",
+        opacity: 0, duration: 0.6, stagger: 0.3, ease: "power2.out",
         immediateRender: false,
         scrollTrigger: { trigger: "[data-stat]", start: "top 88%" },
       });
