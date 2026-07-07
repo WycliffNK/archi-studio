@@ -5,7 +5,14 @@ import Link from "next/link";
 import Image from "next/image";
 import gsap from "gsap";
 
-const navLinks = ["Home", "About", "Services", "Projects", "Articles", "Contact"];
+const navLinks = [
+  { label: "Home",     href: "#"         },
+  { label: "About",    href: "#about"    },
+  { label: "Services", href: "#services" },
+  { label: "Projects", href: "#projects" },
+  { label: "Articles", href: "#articles" },
+  { label: "Contact",  href: "#contact"  },
+];
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -142,17 +149,25 @@ export default function Navbar() {
           <div className="flex flex-col justify-center px-8 md:px-10 lg:px-14 pt-24 md:pt-0 overflow-y-auto [&::-webkit-scrollbar]:w-[4px] [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-white/30 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-white/50">
             <ul className="flex flex-col list-none p-0 m-0 group/nav">
               {navLinks.map((item, i) => (
-                <li key={item}>
-                  <Link
-                    href="#"
+                <li key={item.label}>
+                  <a
+                    href={item.href}
                     className={`font-antonio font-light block leading-[1.05] transition-colors duration-300 group-hover/nav:text-white/30 hover:!text-white ${
                       i === 0 ? "text-white" : "text-white/50"
                     }`}
                     style={{ fontSize: "clamp(40px, 5.5vw, 80px)", letterSpacing: "-0.5px" }}
-                    onClick={() => setMenuOpen(false)}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setMenuOpen(false);
+                      if (item.href === "#") {
+                        window.scrollTo({ top: 0, behavior: "smooth" });
+                      } else {
+                        document.querySelector(item.href)?.scrollIntoView({ behavior: "smooth" });
+                      }
+                    }}
                   >
-                    {item}
-                  </Link>
+                    {item.label}
+                  </a>
                 </li>
               ))}
             </ul>

@@ -9,6 +9,7 @@ gsap.registerPlugin(ScrollTrigger);
 export default function MarqueeText() {
   const wrapRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
+  const tweenRef = useRef<gsap.core.Tween | null>(null);
 
   useEffect(() => {
     const track = trackRef.current;
@@ -16,7 +17,6 @@ export default function MarqueeText() {
 
     const totalWidth = track.scrollWidth / 2;
 
-    // Entrance: section fades + rises into view
     const ctx = gsap.context(() => {
       gsap.from(wrapRef.current, {
         opacity: 0, y: 30, duration: 0.9, ease: "power3.out",
@@ -25,7 +25,7 @@ export default function MarqueeText() {
       });
     });
 
-    const tween = gsap.to(track, {
+    tweenRef.current = gsap.to(track, {
       x: -totalWidth,
       duration: 35,
       ease: "none",
@@ -35,22 +35,25 @@ export default function MarqueeText() {
       },
     });
 
-    return () => { tween.kill(); ctx.revert(); };
+    return () => { tweenRef.current?.kill(); ctx.revert(); };
   }, []);
 
   const words = "we love  architecture  and  interior design".split("  ");
   const items = [...Array(6)].flatMap(() => words);
 
   return (
-    <div ref={wrapRef} className="bg-[#191919] overflow-hidden py-10 border-y border-[#3E3E3E]">
+    <div
+      ref={wrapRef}
+      className="bg-[#191919] overflow-hidden py-10 border-y border-[#3E3E3E] cursor-default"
+      onMouseEnter={() => tweenRef.current?.pause()}
+      onMouseLeave={() => tweenRef.current?.resume()}
+    >
       <div ref={trackRef} className="flex whitespace-nowrap">
         {items.map((word, i) => (
           <span
             key={i}
-            className={`font-bold select-none flex-shrink-0 px-8 ${
-              i % 2 === 0
-                ? "text-[#3E3E3E]"
-                : "text-white"
+            className={`font-bold select-none flex-shrink-0 px-8 transition-colors duration-300 ${
+              i % 2 === 0 ? "text-[#3E3E3E] hover:text-white/20" : "text-white hover:text-[#efff02]"
             }`}
             style={{ fontSize: "clamp(60px, 8vw, 130px)", letterSpacing: "-3px" }}
           >

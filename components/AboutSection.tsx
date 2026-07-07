@@ -50,6 +50,7 @@ export default function AboutSection() {
   return (
     <section
       ref={sectionRef}
+      id="about"
       className="bg-[#191919] overflow-hidden py-20 md:py-28"
       style={{
         backgroundImage: "url('/dotted-pattern.svg')",

@@ -164,7 +164,7 @@ export default function ServicesSection() {
                     {/* banners-icon position-absolute top-60px left-60px lg-top-30px lg-left-30px */}
                     <a
                       href="#"
-                      className="absolute top-[60px] left-[60px] lg:top-[30px] lg:left-[30px] text-white hover:text-[#efff02] transition-colors duration-300 z-10"
+                      className="absolute top-[60px] left-[60px] lg:top-[30px] lg:left-[30px] text-white hover:text-[#efff02] transition-all duration-300 hover:rotate-45 z-10 inline-block"
                       aria-label={service.title}
                     >
                       {service.icon}

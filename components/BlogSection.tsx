@@ -10,16 +10,19 @@ gsap.registerPlugin(ScrollTrigger);
 const articles = [
   {
     category: "Architect",
+    date: "28 Mar 2024",
     title: "Everything designed things are designed.",
     image: "/blog-01.jpg",
   },
   {
     category: "Interior",
+    date: "15 Apr 2024",
     title: "Teamwork is essential for small teams challenges.",
     image: "/blog-02.jpg",
   },
   {
     category: "Landscape",
+    date: "02 May 2024",
     title: "Some people just try to celebrate joys of life.",
     image: "/blog-03.jpg",
   },
@@ -34,10 +37,7 @@ export default function BlogSection() {
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.from(headlineRef.current, {
-        y: 50,
-        opacity: 0,
-        duration: 1,
-        ease: "power3.out",
+        y: 50, opacity: 0, duration: 1, ease: "power3.out",
         immediateRender: false,
         scrollTrigger: { trigger: headlineRef.current, start: "top 85%" },
       });
@@ -45,17 +45,12 @@ export default function BlogSection() {
       cardsRef.current.forEach((card, i) => {
         if (!card) return;
         gsap.from(card, {
-          y: 70,
-          opacity: 0,
-          duration: 0.9,
-          delay: i * 0.15,
-          ease: "power3.out",
+          y: 70, opacity: 0, duration: 0.9, delay: i * 0.15, ease: "power3.out",
           immediateRender: false,
           scrollTrigger: { trigger: card, start: "top 88%" },
         });
       });
 
-      // Ghost "architecture" text: parallax scrub — drifts up as section scrolls
       gsap.fromTo(archRef.current,
         { y: 60 },
         {
@@ -80,11 +75,7 @@ export default function BlogSection() {
       className="bg-[#191919] py-20 md:py-28 overflow-hidden relative"
     >
       <div className="max-w-[1400px] mx-auto px-8 md:px-16">
-        {/* Header */}
-        <div
-          ref={headlineRef}
-          className="text-center mb-12 md:mb-16"
-        >
+        <div ref={headlineRef} className="text-center mb-12 md:mb-16">
           <span className="text-[#efff02] text-xs font-semibold tracking-[3px] uppercase block mb-3">
             Architecture news
           </span>
@@ -93,7 +84,6 @@ export default function BlogSection() {
           </h4>
         </div>
 
-        {/* Cards grid */}
         <div className="grid md:grid-cols-3 gap-6 md:gap-8 mb-16">
           {articles.map((article, i) => (
             <article
@@ -102,29 +92,50 @@ export default function BlogSection() {
               className="group relative overflow-hidden cursor-pointer"
               style={{ height: "420px" }}
             >
+              {/* Image — zooms on hover */}
               <Image
                 src={article.image}
                 alt={article.title}
                 fill
-                className="object-cover transition-transform duration-700 group-hover:scale-105"
+                className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
                 unoptimized
               />
-              {/* Dark overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
-              {/* Content overlay */}
-              <div className="absolute inset-0 flex flex-col justify-between p-10 md:p-12">
-                <div>
-                  <span className="bg-white text-[#191919] text-xs font-bold uppercase tracking-[1px] px-4 py-1.5 rounded-full inline-block">
-                    {article.category}
-                  </span>
-                </div>
+              {/* Gradient overlay — deepens on hover */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent transition-opacity duration-500 group-hover:opacity-90" />
+
+              {/* Category + date — top left */}
+              <div className="absolute top-8 left-8 z-10 flex items-center gap-3">
+                <span className="text-[#efff02] text-[11px] font-semibold tracking-[2px] uppercase">
+                  {article.category}
+                </span>
+                <span className="text-white/30 text-[11px]">—</span>
+                <span className="text-white/50 text-[11px]">{article.date}</span>
+              </div>
+
+              {/* Bottom content — slides up on hover to reveal "Read more" */}
+              <div className="absolute bottom-0 left-0 right-0 p-8 md:p-10 z-10 translate-y-[44px] group-hover:translate-y-0 transition-transform duration-500"
+                style={{ transitionTimingFunction: "cubic-bezier(0.76,0,0.24,1)" }}>
                 <a
                   href="#"
-                  className="text-white font-medium text-lg leading-snug hover:text-[#efff02] transition-colors duration-300 block"
-                  style={{ fontSize: "22px" }}
+                  className="text-white font-medium leading-snug block mb-5 transition-colors duration-300 group-hover:text-white"
+                  style={{ fontSize: "20px" }}
+                  onClick={(e) => e.preventDefault()}
                 >
                   {article.title}
+                </a>
+
+                {/* "Read more" — fades in as content slides up */}
+                <a
+                  href="#"
+                  className="inline-flex items-center gap-3 text-[#efff02] text-[12px] font-semibold tracking-[1px] uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100"
+                  onClick={(e) => e.preventDefault()}
+                >
+                  Read more
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                    <polyline points="12 5 19 12 12 19" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -132,7 +143,7 @@ export default function BlogSection() {
         </div>
       </div>
 
-      {/* "architecture" outline text at bottom — parallax scrub via archRef */}
+      {/* Outline "architecture" text — parallax scrub */}
       <div
         ref={archRef}
         className="text-center font-bold select-none pointer-events-none leading-none overflow-hidden"

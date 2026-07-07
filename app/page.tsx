@@ -9,12 +9,14 @@ import ProjectsSection from "@/components/ProjectsSection";
 import MarqueeText from "@/components/MarqueeText";
 import BlogSection from "@/components/BlogSection";
 import Footer from "@/components/Footer";
+import ScrollToTop from "@/components/ScrollToTop";
 import CustomCursor from "@/components/CustomCursor";
 
 export default function Home() {
   return (
     <>
       <CustomCursor />
+      <ScrollToTop />
       <Navbar />
       <main>
         <HeroSection />
