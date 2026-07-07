@@ -11,6 +11,8 @@
 @theme inline {
   --font-sans: var(--font-plus-jakarta);
   --font-antonio: var(--font-antonio);
+  --font-dancing: var(--font-dancing);
+  --font-bebas: var(--font-bebas);
 }
 
 body {
@@ -28,6 +30,10 @@ body {
 
 .font-dancing {
   font-family: var(--font-dancing), cursive;
+}
+
+.font-bebas {
+  font-family: var(--font-bebas), sans-serif;
 }
 
 

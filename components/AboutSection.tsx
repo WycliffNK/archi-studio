@@ -154,7 +154,7 @@ export default function AboutSection() {
                   {s.desc}
                 </span>
                 {/* fs-18 fw-500 text-base-color */}
-                <span className="text-[#efff02] font-medium text-[18px] flex-shrink-0">
+                <span className="text-[#efff02] font-bebas text-[18px] flex-shrink-0">
                   {s.label}
                 </span>
               </div>

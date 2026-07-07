@@ -10,6 +10,7 @@ const navLinks = ["Home", "About", "Services", "Projects", "Articles", "Contact"
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const navRef = useRef<HTMLElement>(null);
+  const burgerRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     if (!navRef.current) return;
@@ -19,6 +20,12 @@ export default function Navbar() {
       { y: 0, opacity: 1, duration: 1, ease: "power3.out", delay: 0.3 }
     );
   }, []);
+
+  // Lock body scroll while menu is open
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [menuOpen]);
 
   return (
     <>
@@ -38,58 +45,60 @@ export default function Navbar() {
             <Image src="/logo.png" alt="Logo" width={52} height={50} priority />
           </Link>
 
-          {/* Hamburger — Right (hidden when menu open) */}
-          <button
-            onClick={() => setMenuOpen(true)}
-            className={`flex flex-col gap-[5px] z-[60] relative transition-opacity duration-200 ${
-              menuOpen ? "opacity-0 pointer-events-none" : "opacity-100"
-            }`}
-            aria-label="Open menu"
-          >
-            <span className="block w-6 h-[1.5px] bg-white" />
-            <span className="block w-6 h-[1.5px] bg-white" />
-            <span className="block w-6 h-[1.5px] bg-white" />
-          </button>
+          {/* Spacer so flex layout mirrors social links width on the right */}
+          <div className="w-[72px]" />
         </div>
       </header>
 
-      {/* Full-screen overlay menu — z-[60] so it sits above the absolute header (z-50) */}
+      {/* Hamburger — fixed so it's always accessible, z-[70] to sit above the overlay */}
+      <button
+        ref={burgerRef}
+        onClick={() => setMenuOpen((v) => !v)}
+        className="fixed top-6 right-8 md:right-16 z-[70] flex flex-col gap-[5px] py-1 group"
+        aria-label={menuOpen ? "Close menu" : "Open menu"}
+      >
+        <span
+          className={`block w-6 h-[1.5px] bg-white transition-all duration-300 origin-center ${
+            menuOpen ? "rotate-45 translate-y-[6.5px]" : ""
+          }`}
+        />
+        <span
+          className={`block h-[1.5px] bg-white transition-all duration-300 ${
+            menuOpen ? "w-0 opacity-0" : "w-6"
+          }`}
+        />
+        <span
+          className={`block w-6 h-[1.5px] bg-white transition-all duration-300 origin-center ${
+            menuOpen ? "-rotate-45 -translate-y-[6.5px]" : ""
+          }`}
+        />
+      </button>
+
+      {/* Full-screen overlay menu */}
       <div
         className={`fixed inset-0 z-[60] bg-[#191919] flex flex-col transition-all duration-500 ${
           menuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
-        style={{ backgroundImage: "url('/vertical-lines.svg')", backgroundRepeat: "repeat", backgroundPosition: "center top" }}
+        style={{
+          backgroundImage: "url('/vertical-lines.svg')",
+          backgroundRepeat: "repeat",
+          backgroundPosition: "center top",
+        }}
       >
-        {/* Close button — top right white square (matches reference .close-menu bg-white) */}
-        <button
-          onClick={() => setMenuOpen(false)}
-          className="absolute top-7 right-7 md:top-8 md:right-8 z-50 w-11 h-11 rounded-full bg-white flex items-center justify-center hover:bg-[#efff02] transition-colors duration-300"
-          aria-label="Close menu"
-        >
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-            <path d="M1 1l12 12M13 1L1 13" stroke="#191919" strokeWidth="1.8" strokeLinecap="round" />
-          </svg>
-        </button>
-
-        {/* Content grid — left 8fr info, right 3fr nav (matches reference col-lg-8 / col-lg-3 offset-1) */}
+        {/* Content grid — left 8fr info, right 4fr nav */}
         <div className="relative flex-1 grid grid-cols-1 md:grid-cols-[8fr_4fr] overflow-hidden min-h-0">
 
-          {/* Left panel — Footer logo + contact info rows */}
+          {/* Left panel — logo + contact info */}
           <div className="hidden md:flex flex-col px-14 lg:px-20 pt-20 pb-10">
-
-            {/* Footer logo */}
             <div className="flex-shrink-0">
               <Image src="/logo-footer.png" alt="Logo" width={87} height={84} />
             </div>
 
-            {/* Contact info — 3 columns matching reference */}
             <div className="grid grid-cols-3 gap-8 mt-[22px]">
               <div>
-                {/* fs-14 fw-600 ls-2px text-uppercase mb-5px */}
                 <span className="text-[#efff02] text-[14px] tracking-[2px] uppercase font-semibold block mb-[5px]">
                   Let&apos;s Meet
                 </span>
-                {/* w-90 md-w-80 */}
                 <p className="text-[#737373] text-sm leading-relaxed w-[90%]">
                   27 Eden walk eden centre, Orchard, Paris, France
                 </p>
@@ -99,11 +108,9 @@ export default function Navbar() {
                 <span className="text-[#efff02] text-[14px] tracking-[2px] uppercase font-semibold block mb-[5px]">
                   Let&apos;s Talk
                 </span>
-                {/* text-white-hover: gray default, white on hover */}
                 <a href="tel:1800222002" className="text-[#737373] hover:text-white transition-colors text-sm">
                   1-800-222-002
                 </a><br />
-                {/* text-decoration-line-bottom text-white: white with bottom border */}
                 <a href="mailto:info@yourdomain.com" className="text-white text-sm border-b border-white hover:border-[#efff02] hover:text-[#efff02] transition-colors">
                   info@yourdomain.com
                 </a>
@@ -131,8 +138,8 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* Right panel — Nav links with mCS-light style scrollbar for overflow */}
-          <div className="flex flex-col justify-center px-8 md:px-10 lg:px-14 pt-24 md:pt-0 overflow-y-auto [&::-webkit-scrollbar]:w-[4px] [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-white/30 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:min-h-[30px] hover:[&::-webkit-scrollbar-thumb]:bg-white/50">
+          {/* Right panel — Nav links */}
+          <div className="flex flex-col justify-center px-8 md:px-10 lg:px-14 pt-24 md:pt-0 overflow-y-auto [&::-webkit-scrollbar]:w-[4px] [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-white/30 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-white/50">
             <ul className="flex flex-col list-none p-0 m-0 group/nav">
               {navLinks.map((item, i) => (
                 <li key={item}>
@@ -141,10 +148,7 @@ export default function Navbar() {
                     className={`font-antonio font-light block leading-[1.05] transition-colors duration-300 group-hover/nav:text-white/30 hover:!text-white ${
                       i === 0 ? "text-white" : "text-white/50"
                     }`}
-                    style={{
-                      fontSize: "clamp(40px, 5.5vw, 80px)",
-                      letterSpacing: "-0.5px",
-                    }}
+                    style={{ fontSize: "clamp(40px, 5.5vw, 80px)", letterSpacing: "-0.5px" }}
                     onClick={() => setMenuOpen(false)}
                   >
                     {item}
@@ -155,16 +159,13 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Bottom bar — col-12 menu-text border-top d-none d-md-inline-block text-center */}
+        {/* Bottom bar */}
         <div className="relative border-t border-white/[0.15] px-8 md:px-14 lg:px-20 py-4 hidden md:flex items-center justify-center gap-0">
-          {/* h6 fw-400 align-middle */}
           <p className="text-white/60 text-sm font-normal inline-block align-middle mb-0">
             Let&apos;s build something{" "}
             <span className="text-white">great together</span>
           </p>
-          {/* separator-line-1px w-70px bg-base-color ms-20px me-20px mt-5px */}
           <div className="w-[70px] h-px bg-[#efff02] flex-shrink-0 mx-5 mt-[5px]" />
-          {/* fs-26 fw-500 text-base-color */}
           <a href="mailto:hello@crafto.com" className="text-[#efff02] font-medium inline-block align-middle" style={{ fontSize: "26px" }}>
             hello@crafto.com
           </a>
