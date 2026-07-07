@@ -59,11 +59,12 @@ export default function AboutSection() {
     >
       <div className="max-w-[1320px] mx-auto px-8 md:px-16">
 
-        {/* Top row — left col + right col side by side at lg */}
-        <div className="grid lg:grid-cols-2 items-center gap-12 lg:gap-20 mb-14 md:mb-16">
+        {/* Top row — mb-5 sm-mb-30px: base=30px, sm+(640px)=48px */}
+        <div className="grid lg:grid-cols-2 items-center mb-[30px] sm:mb-12">
 
-          {/* Left: signature + heading — col-lg-6 md-mb-50px sm-mb-40px text-center text-sm-start */}
-          <div data-about-left className="text-center sm:text-left mb-10 sm:mb-10 lg:mb-0">
+          {/* Left: col-lg-6 md-mb-50px sm-mb-40px text-center text-sm-start */}
+          {/* md-mb-50px (≤767px)=50px, sm-mb-40px (≤575px)=40px → Tailwind: base=40px, sm=50px, lg=0 */}
+          <div data-about-left className="text-center sm:text-left mb-[40px] sm:mb-[50px] lg:mb-0">
             <Image
               src="/signature.png"
               alt="Signature"
@@ -72,53 +73,65 @@ export default function AboutSection() {
               className="max-w-[272px] w-auto inline-block"
               unoptimized
             />
+            {/* w-90 lg-w-100: default=90%, ≤991px=100% → Tailwind: base=100%, lg=90% */}
             <h4
-              className="text-white font-semibold leading-[1.2] mt-5 mb-0 w-[90%] lg:w-full"
+              className="text-white font-semibold leading-[1.2] mt-5 mb-0 w-full lg:w-[90%]"
               style={{ fontSize: "clamp(20px, 2.2vw, 28px)" }}
             >
               Delivering awesome quality, effective and inspiring built gorgeous space.
             </h4>
           </div>
 
-          {/* Right: atropos circle + established text */}
-          <div className="flex items-center justify-center sm:justify-start gap-8 md:gap-10">
+          {/* Right: col-lg-6 — inner 12-col grid matching col-xl-6/lg-5/sm-4 + col-xl-6/lg-7/sm-8 */}
+          <div>
+            <div className="grid grid-cols-12 items-center">
 
-            {/* Atropos 3D circle — col-xl-6 col-lg-5 col-sm-4 */}
-            <div data-about-circle className="flex-shrink-0 text-center">
-              <Atropos
-                rotateTouch="scroll-y"
-                shadow
-                activeOffset={40}
-                style={{ display: "inline-block", perspective: "500px" }}
+              {/* Circle: col-xl-6 col-lg-5 col-sm-4, xs-mb-15px, text-center text-sm-start text-lg-center */}
+              {/* position-relative + transform-3d (preserve-3d) = Crafto classes on the col */}
+              <div
+                data-about-circle
+                className="col-span-12 sm:col-span-4 lg:col-span-5 xl:col-span-6 relative text-center sm:text-left lg:text-center mb-[15px] sm:mb-0"
+                style={{ transformStyle: "preserve-3d" }}
               >
-                {/* "16" at depth -5: lags behind the circle on tilt = depth illusion */}
-                <div
-                  data-atropos-offset="-5"
-                  className="relative w-full"
-                  style={{ top: "50px" }}
+                <Atropos
+                  shadow
+                  rotateTouch
+                  duration={300}
+                  innerClassName="text-center"
+                  style={{ display: "inline-block" }}
+                  {...{ 'data-atropos-perspective': 500 }}
                 >
-                  <span
-                    className="absolute left-0 w-full text-center font-bold text-[#191919] leading-none select-none"
-                    style={{ fontSize: "clamp(130px, 11.5vw, 180px)", letterSpacing: "-3px" }}
+                  {/* top-50px default, lg-top-30px (≤991px), md-top-40px (≤767px) → Tailwind: base=40px, md=30px, lg=50px */}
+                  <div
+                    data-atropos-offset="-5"
+                    className="relative w-full top-[40px] md:top-[30px] lg:top-[50px]"
                   >
-                    16
-                  </span>
-                </div>
-                {/* Yellow circle at default depth — appears in front on hover */}
-                <span className="w-[150px] h-[150px] md:w-[170px] md:h-[170px] xl:w-[210px] xl:h-[210px] rounded-full inline-block bg-[#efff02]" />
-              </Atropos>
-            </div>
+                    {/* fs-180 default, lg-fs-130 (≤991px), md-fs-150 (≤767px) → Tailwind: base=150px, md=130px, lg=180px */}
+                    <span
+                      className="absolute left-0 w-full text-center font-antonio font-bold text-[#191919] leading-none select-none text-[150px] md:text-[130px] lg:text-[180px]"
+                      style={{ letterSpacing: "-3px" }}
+                    >
+                      16
+                    </span>
+                  </div>
+                  {/* w-210px default, lg-w-150px (≤991px), md-w-170px (≤767px), sm-w-150px (≤575px) → Tailwind: base=150px, sm=170px, md=150px, lg=210px */}
+                  <span className="w-[150px] h-[150px] sm:w-[170px] sm:h-[170px] md:w-[150px] md:h-[150px] lg:w-[210px] lg:h-[210px] rounded-full inline-block bg-[#efff02]" />
+                </Atropos>
+              </div>
 
-            {/* "Established for 16 years." text — col-xl-6 col-lg-7 col-sm-8 text-center text-sm-start */}
-            <div data-about-right-text className="text-center sm:text-left">
-              {/* fs-14 text-uppercase ls-1px text-white fw-600 d-block mb-5px */}
-              <span className="text-[14px] uppercase tracking-[1px] text-white font-semibold block mb-[5px]">
-                Established for 16 years.
-              </span>
-              {/* w-90 lg-w-100 */}
-              <p className="text-[#737373] text-sm leading-relaxed w-[90%] lg:w-full">
-                We are dedicated to providing outstanding architectural and design services that meet the functional and aesthetic.
-              </p>
+              {/* Text: col-xl-6 col-lg-7 col-sm-8 text-center text-sm-start */}
+              <div
+                data-about-right-text
+                className="col-span-12 sm:col-span-8 lg:col-span-7 xl:col-span-6 text-center sm:text-left"
+              >
+                <span className="text-[14px] uppercase tracking-[1px] text-white font-semibold block mb-[5px]">
+                  Established for 16 years.
+                </span>
+                {/* w-90 lg-w-100: default=90%, ≤991px=100% → Tailwind: base=100%, lg=90% */}
+                <p className="text-[#737373] text-sm leading-relaxed w-full lg:w-[90%]">
+                  We are dedicated to providing outstanding architectural and design services that meet the functional and aesthetic.
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -129,14 +142,14 @@ export default function AboutSection() {
             <div
               key={s.label}
               data-stat
-              className="pr-12 mb-[30px] lg:mb-0"
+              className={`pr-12 ${i < 2 ? "mb-[30px] md:mb-0" : ""}`}
             >
               {/* separator-line-1px bg-charcoal-grey mb-25px — first item d-none d-lg-block */}
               <div className={`h-px bg-[#333333] w-full mb-[25px] ${i === 0 ? "hidden lg:block" : "block"}`} />
               {/* feature-box feature-box-left-icon: content left, icon number right */}
-              <div className="flex items-start justify-between gap-4">
-                {/* text-medium-gray fs-18 lh-30 w-80 sm-w-90 d-block */}
-                <span className="text-[#737373] text-[18px] leading-[30px] w-[80%] sm:w-[90%] block">
+              <div className="flex items-start justify-between">
+                {/* text-medium-gray fs-18 lh-30 w-80 sm-w-90 d-block: default=90%, sm+(640px)=80% */}
+                <span className="text-[#737373] text-[18px] leading-[30px] w-[90%] sm:w-[80%] block">
                   <span className="text-white font-semibold">{s.num}</span>{" "}
                   {s.desc}
                 </span>
