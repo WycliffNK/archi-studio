@@ -60,6 +60,11 @@ body {
   background: #efff02;
 }
 
+@keyframes badge-rotation {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
 /* Custom cursor — hide default on pointer devices only */
 @media (pointer: fine) {
   *, a, button {
