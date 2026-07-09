@@ -21,12 +21,12 @@ export default function AwardsSection() {
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.from(leftRef.current, {
-        opacity: 0, x: -40, duration: 1.1, ease: "power3.out",
+        opacity: 0, duration: 0.6, ease: "power2.out",
         immediateRender: false,
         scrollTrigger: { trigger: leftRef.current, start: "top 85%" },
       });
       gsap.from(rowsRef.current.filter(Boolean), {
-        opacity: 0, y: 30, duration: 0.7, stagger: 0.12, ease: "power2.out",
+        opacity: 0, y: 30, duration: 0.6, stagger: 0.3, ease: "power2.out",
         immediateRender: false,
         scrollTrigger: { trigger: sectionRef.current, start: "top 75%" },
       });
@@ -40,13 +40,13 @@ export default function AwardsSection() {
       id="awards"
       className="bg-[#1F1F1F] relative"
       style={{
-        minHeight: "858px",
+        height: "858px",
         backgroundImage: "url('/dotted-pattern.svg')",
         backgroundPosition: "center top",
         backgroundRepeat: "repeat",
       }}
     >
-      <div className="max-w-[1320px] mx-auto px-8 md:px-16 pt-20 md:pt-28">
+      <div className="max-w-[1320px] mx-auto px-8 md:px-16 pt-20 md:pt-36">
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-0">
 
           <div ref={leftRef} className="lg:col-span-4">
