@@ -140,7 +140,7 @@ export default function ServicesSection() {
             loop={true}
             autoplay={{ delay: 4000, disableOnInteraction: false }}
             breakpoints={{
-              768: { slidesPerView: 2 },
+              768: { slidesPerView: 3 },
               992: { slidesPerView: 3 },
               1200: { slidesPerView: 4 },
             }}
