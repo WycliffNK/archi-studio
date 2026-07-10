@@ -53,8 +53,8 @@ export default function AwardsSection() {
             <span className="text-[#efff02] text-[12px] font-semibold tracking-[3px] uppercase block mb-[5px]">
               International awards
             </span>
-            <h4 className="text-white font-semibold leading-snug mb-[20px]"
-              style={{ fontSize: "clamp(20px, 2vw, 26px)" }}>
+            <h4 className="text-white font-semibold leading-[1.1] mb-[20px]"
+              style={{ fontSize: "clamp(24px, 2.9vw, 38px)" }}>
               These awards reflect the hard work.
             </h4>
             <p className="text-[#737373] text-sm leading-relaxed">
@@ -68,31 +68,25 @@ export default function AwardsSection() {
               <div
                 key={award.year}
                 ref={(el) => { rowsRef.current[i] = el; }}
-                className={`group relative grid items-center py-[25px] pr-10 md:pr-0 overflow-hidden cursor-pointer ${
+                className={`grid items-center py-[25px] pr-10 md:pr-0 ${
                   i < awards.length - 1 ? "border-b border-[#3E3E3E]" : ""
                 }`}
                 style={{ gridTemplateColumns: "2fr 6fr 3fr 1fr" }}
               >
-                {/* Hover background — slides in from left */}
-                <div className="absolute inset-0 bg-[#2a2a2a] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out -z-10"
-                  style={{ transitionTimingFunction: "cubic-bezier(0.76,0,0.24,1)" }} />
-
-                <span className="font-semibold text-[#efff02] transition-all duration-300 group-hover:pl-2">
+                <span className="font-semibold text-[#efff02]">
                   {award.year}
                 </span>
 
-                <span className="text-white font-medium transition-all duration-300 group-hover:pl-2"
-                  style={{ fontSize: "17px" }}>
+                <span className="text-white font-medium" style={{ fontSize: "17px" }}>
                   {award.title}
                 </span>
 
-                <span className="text-[#737373] font-medium text-sm hidden md:block transition-colors duration-300 group-hover:text-white/60">
+                <span className="text-[#737373] font-medium text-sm hidden md:block">
                   {award.category}
                 </span>
 
-                {/* Arrow — slides right on hover */}
                 <a href="#"
-                  className="text-white flex justify-end absolute right-0 md:static transition-all duration-300 group-hover:text-[#efff02] group-hover:translate-x-1"
+                  className="text-white flex justify-end absolute right-0 md:static"
                   onClick={(e) => e.preventDefault()}
                 >
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">

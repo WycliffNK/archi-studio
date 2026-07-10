@@ -149,15 +149,15 @@ export default function Navbar() {
           </svg>
         </button>
 
-        <div className="relative flex-1 grid grid-cols-1 md:grid-cols-[8fr_4fr] overflow-hidden min-h-0">
+        <div className="relative flex-1 grid grid-cols-1 md:grid-cols-[3fr_2fr] overflow-hidden min-h-0">
 
           {/* Left panel — logo + contact */}
-          <div ref={leftColRef} className="hidden md:flex flex-col px-14 lg:px-20 pt-20 pb-10">
+          <div ref={leftColRef} className="hidden md:flex flex-col justify-between px-14 lg:px-20 pt-20 pb-14">
             <div className="flex-shrink-0">
               <Image src="/logo-footer.png" alt="Logo" width={87} height={84} />
             </div>
 
-            <div className="grid grid-cols-3 gap-8 mt-[22px]">
+            <div className="grid grid-cols-3 gap-8">
               <div>
                 <span className="text-[#efff02] text-[14px] tracking-[2px] uppercase font-semibold block mb-[5px]">
                   Let&apos;s Meet
@@ -207,10 +207,10 @@ export default function Navbar() {
                   <a
                     ref={(el) => { linkRefs.current[i] = el; }}
                     href={item.href}
-                    className={`font-antonio font-light block leading-[1.05] transition-colors duration-300 group-hover/nav:text-white/30 hover:!text-white ${
-                      i === 0 ? "text-white" : "text-white/50"
+                    className={`block leading-[1.1] transition-colors duration-300 group-hover/nav:text-white/20 hover:!text-white ${
+                      i === 0 ? "text-white/30" : "text-white"
                     }`}
-                    style={{ fontSize: "clamp(40px, 5.5vw, 80px)", letterSpacing: "-0.5px" }}
+                    style={{ fontSize: "clamp(34px, 5vw, 72px)", letterSpacing: "-0.5px", fontFamily: "var(--font-plus-jakarta), sans-serif", fontWeight: 600 }}
                     onClick={(e) => handleNavClick(e, item.href)}
                   >
                     {item.label}

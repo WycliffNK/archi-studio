@@ -26,6 +26,28 @@ export default function Home() {
         <ProjectsSection />
         <MarqueeText />
         <BlogSection />
+
+        {/* Architecture wordmark strip — letters deliberately overflow the fixed-height container */}
+        <div
+          className="bg-[#191919] overflow-hidden flex items-center"
+          style={{
+            backgroundImage: "url('/dotted-pattern.svg')",
+            backgroundPosition: "center top",
+            backgroundRepeat: "repeat",
+            height: "clamp(70px, 9.5vw, 150px)",
+          }}
+        >
+          <div
+            className="font-antonio font-bold text-center whitespace-nowrap w-full select-none pointer-events-none leading-none"
+            style={{
+              fontSize: "clamp(110px, 15vw, 240px)",
+              color: "#2B2B2B",
+              letterSpacing: "-5px",
+            }}
+          >
+            architecture
+          </div>
+        </div>
       </main>
       <Footer />
     </>
